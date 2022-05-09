@@ -1,0 +1,11 @@
+{
+  "isAutoReload": true,
+  "pluginPrefix": "pluginApp_",
+  "plugins": [
+    {
+      "pluginName": "",
+      "dllFullPath": "",
+      "isAutoReload": false
+    }
+  ]
+}

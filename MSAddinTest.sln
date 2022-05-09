@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAddinTest", "MSAddinTest\MSAddinTest.csproj", "{21D13145-F4B6-41D7-9DDD-0D9E4C128C09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{3E501701-EA7A-43F3-989C-AE14D506882D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21D13145-F4B6-41D7-9DDD-0D9E4C128C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D13145-F4B6-41D7-9DDD-0D9E4C128C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21D13145-F4B6-41D7-9DDD-0D9E4C128C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21D13145-F4B6-41D7-9DDD-0D9E4C128C09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E501701-EA7A-43F3-989C-AE14D506882D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E501701-EA7A-43F3-989C-AE14D506882D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E501701-EA7A-43F3-989C-AE14D506882D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E501701-EA7A-43F3-989C-AE14D506882D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {71F5818C-C2CB-4579-801C-8AF3A2E5E13D}
+	EndGlobalSection
+EndGlobal
