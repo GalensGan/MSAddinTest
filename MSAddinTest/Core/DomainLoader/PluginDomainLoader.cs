@@ -1,4 +1,4 @@
-﻿using MSAddinTest.Plugin;
+﻿using MSAddinTest.PluginInterface;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,8 +52,15 @@ namespace MSAddinTest.Core.DomainLoader
             _appDomain = AppDomain.CreateDomain(PluginDomainSetup.ApplicationName, null, setup);
             var name = Assembly.GetExecutingAssembly().GetName().FullName;
 
-            _remoteLoader = (RemoteLoader)_appDomain.CreateInstanceAndUnwrap(name, typeof(RemoteLoader).FullName);
-            _remoteLoader.LoadAssembly(PluginDomainSetup.DllFullPath);
+            try
+            {
+                _remoteLoader = (RemoteLoader)_appDomain.CreateInstanceAndUnwrap(name, typeof(RemoteLoader).FullName);
+                _remoteLoader.LoadAssembly(PluginDomainSetup.DllFullPath);
+            }
+            catch(Exception e)
+            {
+                ;
+            }
         }
 
         /// <summary>

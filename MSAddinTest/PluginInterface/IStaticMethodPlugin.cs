@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSAddinTest.Plugin
+namespace MSAddinTest.PluginInterface
 {
     /// <summary>
-    /// 用于主子域间传递参数
+    /// 静态方法的入口
     /// </summary>
-    public class PluginArg:MarshalByRefObject
+    public interface IStaticMethodPlugin : IPlugin
     {
-       
     }
 }

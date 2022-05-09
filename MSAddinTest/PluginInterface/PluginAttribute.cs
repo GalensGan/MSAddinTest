@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSAddinTest.Plugin
+namespace MSAddinTest.PluginInterface
 {
     /// <summary>
     /// Plugin特性

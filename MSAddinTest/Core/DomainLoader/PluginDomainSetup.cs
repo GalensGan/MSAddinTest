@@ -22,17 +22,17 @@ namespace MSAddinTest.Core.DomainLoader
         /// <summary>
         /// 
         /// </summary>
-        public string ApplicationBase { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
+        public string ApplicationBase { get; set; } = @"C:\Users\galens\Desktop\test" + ";" + AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
         /// 
         /// </summary>
-        public string PrivateBinPath { get; set; }= AppDomain.CurrentDomain.BaseDirectory;
+        public string PrivateBinPath { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string CachePath { get; set; }= AppDomain.CurrentDomain.BaseDirectory;
+        public string CachePath { get; set; }= @"C:\Users\galens\Desktop\test";
 
         /// <summary>
         /// Dll 全路径

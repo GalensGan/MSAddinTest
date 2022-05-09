@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSAddinTest.Plugin
+namespace MSAddinTest.PluginInterface
 {
     /// <summary>
-    /// 插件接口
-    /// 继承该接口必须有一个无参的构造函数
+    /// 用于主子域间传递参数
     /// </summary>
-    public interface IPlugin
+    public class PluginArg:MarshalByRefObject
     {
        
     }

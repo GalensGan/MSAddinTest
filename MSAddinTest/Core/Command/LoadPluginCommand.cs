@@ -19,34 +19,50 @@ namespace MSAddinTest.Core.Command
         public override object Start()
         {
             // 打开选择窗体
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "类库文件|*.dll";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "类库文件|*.dll",
+                Multiselect = true,
+            };
             var result = openFileDialog.ShowDialog();
             if (result == null || !(bool)result) return StatusCode.Failed;
 
-            string dllPath = openFileDialog.FileName;
-            string pluginName = Path.GetFileNameWithoutExtension(dllPath);
+            var dllPaths = openFileDialog.FileNames;
 
-            if (PluginDomains.ContainsKey(pluginName))
+            foreach (var dllPath in dllPaths)
             {
-                return StatusCode.AlreadyLoaded;
+                string pluginName = Path.GetFileNameWithoutExtension(dllPath);
+
+                if (PluginDomains.ContainsKey(pluginName))
+                {
+                    return StatusCode.AlreadyLoaded;
+                }
+
+                var setup = new PluginDomainSetup()
+                {
+                    PluginName = pluginName,
+                    DllFullPath = dllPath,
+                };
+
+                var loader = new PluginDomainLoader(setup);
+                loader.LoadAssembly();
+                PluginDomains.Add(loader);
+
+                AssemblyLoaded(loader);
             }
 
-            var setup = new PluginDomainSetup()
-            {
-                PluginName = pluginName,
-                DllFullPath = dllPath,
-            };
-
-            var loader = new PluginDomainLoader(setup);
-            loader.LoadAssembly();
-            PluginDomains.Add(loader);
-
-            // 加载成功后，将加载记录添加到本地设置中，方便下次调用
-            PluginSetting.AddPlugin(pluginName, dllPath, true);
-            PluginSetting.Save();
-
             return StatusCode.Success;
+        }
+
+        /// <summary>
+        /// 保存到文件记录中
+        /// </summary>
+        /// <param name="loader"></param>
+        protected virtual void AssemblyLoaded(PluginDomainLoader loader)
+        {
+            // 加载成功后，将加载记录添加到本地设置中，方便下次调用
+            PluginSetting.AddPlugin(loader.PluginDomainSetup.PluginName, loader.PluginDomainSetup.DllFullPath, true);
+            PluginSetting.Save();
         }
     }
 }

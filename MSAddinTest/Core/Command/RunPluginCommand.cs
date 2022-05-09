@@ -1,4 +1,4 @@
-﻿using MSAddinTest.Plugin;
+﻿using MSAddinTest.PluginInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;

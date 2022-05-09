@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<KeyinTree xmlns="http://www.bentley.com/schemas/1.0/MicroStation/AddIn/KeyinTree.xsd">
+	<RootKeyinTable ID="root">
+		<Keyword SubtableRef="subKeyin" CommandWord="TestPlugin">
+			<Options Required="false"/>
+		</Keyword>
+	</RootKeyinTable>
+
+	<SubKeyinTables>
+		<KeyinTable ID="subKeyin">
+			<Keyword CommandWord="element" />
+			<Keyword CommandWord="addin" />		
+		</KeyinTable>
+	</SubKeyinTables>
+
+	<KeyinHandlers>
+		<KeyinHandler Keyin="TestPlugin element" Function="TestAddinPlugin.TestAddin.PluginKeyinFuncs.TestElement" />
+		<KeyinHandler Keyin="TestPlugin addin" Function="TestAddinPlugin.TestAddin.PluginKeyinFuncs.TestAddin" />		
+	</KeyinHandlers>
+</KeyinTree>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSAddinTest.Plugin
+namespace MSAddinTest.PluginInterface
 {
     /// <summary>
     /// 类执行器的插件接口
