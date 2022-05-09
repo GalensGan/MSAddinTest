@@ -12,23 +12,25 @@ namespace MSAddinTest.Core.Command
     /// </summary>
     internal class UnloadPluginCommand : CommandBase
     {
-        #region 卸载参数
+        public UnloadPluginCommand(string pluginName)
+        {
+            _pluginNameToUnload = pluginName;
+        }
         /// <summary>
         /// 待卸载的插件名称
         /// </summary>
-        public string PluginNameToUnload { get; set; }
-        #endregion
+        private string _pluginNameToUnload { get; set; }
 
         public override object Start()
         {
-            var pluginDomainLoader = PluginDomains[PluginNameToUnload];
+            var pluginDomainLoader = PluginDomains[_pluginNameToUnload];
             if (pluginDomainLoader == null) return StatusCode.NotFound;
 
             // 卸载插件
             pluginDomainLoader.Unload();
 
             // 移除插件域,让 GC 回收
-            PluginDomains.Remove(PluginNameToUnload);
+            PluginDomains.Remove(_pluginNameToUnload);
 
             return StatusCode.Success;
         }

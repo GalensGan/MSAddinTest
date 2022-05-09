@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MSAddinTest.Core.Command
 {
@@ -14,8 +15,9 @@ namespace MSAddinTest.Core.Command
     {
         private PluginArg _args;
         private string _executorName;
+
         /// <summary>
-        /// 传入执行器名称和参数
+        /// 用户端初始化时，传入执行器的名称和执行器的初始化参数
         /// </summary>
         /// <param name="excutorName"></param>
         /// <param name="args"></param>
@@ -24,14 +26,22 @@ namespace MSAddinTest.Core.Command
             _executorName = excutorName;
             _args = args;
         }
+
         public override object Start()
         {
+            int executorsCount = 0;
             foreach (var kv in PluginDomains)
             {
-                kv.Value.Execute(_executorName, _args);
+                var result = kv.Value.Execute(_executorName, _args);
+                if (result is int count) executorsCount += count;
             }
 
-            return true;
+            if(executorsCount == 0)
+            {
+                MessageBox.Show($"未找到名为{_executorName}的执行器");
+            }
+
+            return executorsCount>0;
         }
     }
 }

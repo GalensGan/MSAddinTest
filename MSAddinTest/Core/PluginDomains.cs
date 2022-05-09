@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSAddinTest.Core.DomainLoader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace MSAddinTest.Core
 
         public void Add(PluginDomainLoader domainLoader)
         {
-            Add(domainLoader.PluginName, domainLoader);
+            Add(domainLoader.PluginDomainSetup.PluginName, domainLoader);
         }
     }
 }

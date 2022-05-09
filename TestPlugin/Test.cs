@@ -9,16 +9,13 @@ using System.Windows;
 namespace TestPlugin
 {
     [Plugin(Name ="test",Description ="test description")]
-    public class Test : IPlugin
+    public class Test : IClassPlugin
     {
         public object Execute(PluginArg arg)
         {
-            MessageBox.Show("插件运行了！"+arg);
-            return true;
-        }
-
-        public bool Init(PluginArg arg)
-        {
+            string msg1 = "插件运行了！";
+            string msg2 = "插件被修改了~";
+            MessageBox.Show(msg1);
             return true;
         }
     }

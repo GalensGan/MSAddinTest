@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSAddinTest.Plugin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,22 +10,19 @@ namespace MSAddinTest.Core.Executor
     /// <summary>
     /// 类执行器
     /// </summary>
-    internal class ClassExecutor: IExecutor
+    internal class ClassExecutor : ExecutorBase
     {
-        /// <summary>
-        /// 类型
-        /// </summary>
-        public Type Type { get; set; }
+        public ClassExecutor(Type type) : base(type) { }
 
-        /// <summary>
-        /// 执行器名称
-        /// 通过类的特性来获取，如果没有特性，就为类型名称
-        /// </summary>
-        public string Name { get; set; }
+        public override object Execute(PluginArg pluginArg)
+        {
+            var instance = Activator.CreateInstance(Type);
+            if (instance is IClassPlugin plugin)
+            {
+                return plugin.Execute(pluginArg);
+            }
 
-        /// <summary>
-        /// 描述
-        /// </summary>
-        public string Description { get; set; }
+            return false;
+        }
     }
 }

@@ -11,11 +11,6 @@ namespace MSAddinTest.Plugin
     /// </summary>
     public class PluginArg:MarshalByRefObject
     {
-        public Addin Addin { get; set; } = new Addin();
-    }
-
-    public class Addin
-    {
-        public string Name { get; set; }    
+       
     }
 }

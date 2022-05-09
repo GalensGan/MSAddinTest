@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace MSAddinTest.Plugin
 {
-    internal class PluginBase
+    /// <summary>
+    /// 静态方法的入口
+    /// </summary>
+    public interface IStaticMethodPlugin : IPlugin
     {
     }
 }

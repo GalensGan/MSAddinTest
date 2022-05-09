@@ -15,6 +15,7 @@
         <StackPanel Margin="5" Grid.Row="0" Orientation="Horizontal">
             <Button Padding="2" Margin="2" x:Name="LoadPluginBtn" ToolTip="加载插件">loadPlugin</Button>
             <Button Padding="2" Margin="2" x:Name="UnloadPluginBtn" ToolTip="卸载插件">unLoadPlugin</Button>
+            <Button Padding="2" Margin="2" x:Name="ReloadPluginBtn" ToolTip="重载插件">reLoadPlugin</Button>
             <Button  Padding="2" Margin="2" x:Name="TestBtn" ToolTip="执行插件">test</Button>
         </StackPanel>
     </Grid>

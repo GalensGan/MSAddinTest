@@ -32,12 +32,19 @@ namespace MSAddinTest
             TestBtn.Click += TestBtn_Click;
             LoadPluginBtn.Click += LoadPluginBtn_Click;
             UnloadPluginBtn.Click += UnloadPluginBtn_Click;
+            ReloadPluginBtn.Click += ReloadPluginBtn_Click;
+        }
+
+        private void ReloadPluginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var cmd = new ReloadPluginCommand("TestPlugin");
+            PluginManager.Manager.InvokeCommand(cmd);
         }
 
         private void UnloadPluginBtn_Click(object sender, RoutedEventArgs e)
         {
             // 卸载插件
-            var cmd = new UnloadPluginCommand();
+            var cmd = new UnloadPluginCommand("TestPlugin");
             PluginManager.Manager.InvokeCommand(cmd);
         }
 

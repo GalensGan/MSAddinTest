@@ -12,17 +12,6 @@ namespace MSAddinTest.Plugin
     /// </summary>
     public interface IPlugin
     {
-        /// <summary>
-        /// 执行插件方法
-        /// </summary>
-        /// <param name="arg">用于初始化的参数</param>
-        /// <returns>执行结果json串</returns>
-        object Execute(PluginArg arg);
-
-        /// <summary>
-        /// 插件初始化
-        /// </summary>
-        /// <returns></returns>
-        bool Init(PluginArg arg);
+       
     }
 }

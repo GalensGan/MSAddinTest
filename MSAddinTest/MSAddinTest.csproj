@@ -62,15 +62,18 @@
     <Compile Include="Core\Command\ICommandInvoker.cs" />
     <Compile Include="Core\Command\IPluginCommand.cs" />
     <Compile Include="Core\Command\LoadPluginCommand.cs" />
+    <Compile Include="Core\Command\ReloadPluginCommand.cs" />
     <Compile Include="Core\Command\RunPluginCommand.cs" />
     <Compile Include="Core\Command\UnloadPluginCommand.cs" />
+    <Compile Include="Core\DomainLoader\PluginDomainSetup.cs" />
     <Compile Include="Core\Executor\ClassExecutor.cs" />
-    <Compile Include="Core\Executor\IExecutor.cs" />
+    <Compile Include="Core\Executor\ExecutorBase.cs" />
+    <Compile Include="Core\Executor\StaticMethodExecutor.cs" />
     <Compile Include="Core\PluginDomains.cs" />
     <Compile Include="Core\StatusCode.cs" />
-    <Compile Include="Plugin\AddinPlugin.cs" />
+    <Compile Include="Plugin\IClassPlugin.cs" />
+    <Compile Include="Plugin\IStaticMethodPlugin.cs" />
     <Compile Include="Plugin\PluginAttribute.cs" />
-    <Compile Include="Plugin\PluginBase.cs" />
     <Compile Include="Plugin\PluginArg.cs" />
     <Compile Include="Utils\Ex_Json.cs" />
     <Page Include="MainWindow.xaml">
@@ -87,7 +90,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\PluginDomainLoader.cs" />
+    <Compile Include="Core\DomainLoader\PluginDomainLoader.cs" />
     <Compile Include="Core\PluginManager.cs" />
     <Compile Include="Core\RemoteLoader.cs" />
     <Compile Include="Core\Settings\PluginSetting.cs" />

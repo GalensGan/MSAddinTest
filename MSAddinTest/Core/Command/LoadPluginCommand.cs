@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using MSAddinTest.Core.DomainLoader;
 using MSAddinTest.Core.Settings;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,14 @@ namespace MSAddinTest.Core.Command
                 return StatusCode.AlreadyLoaded;
             }
 
-            var loader = new PluginDomainLoader(pluginName);
-            loader.LoadAssembly(dllPath);
+            var setup = new PluginDomainSetup()
+            {
+                PluginName = pluginName,
+                DllFullPath = dllPath,
+            };
+
+            var loader = new PluginDomainLoader(setup);
+            loader.LoadAssembly();
             PluginDomains.Add(loader);
 
             // 加载成功后，将加载记录添加到本地设置中，方便下次调用

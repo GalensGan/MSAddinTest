@@ -15,6 +15,11 @@ namespace MSAddinTest.Core.Command
         protected PluginDomains PluginDomains { get; private set; }
         protected PluginSetting PluginSetting { get; private set; }
 
+        /// <summary>
+        /// 供 PluginManager 初始化 Command 使用
+        /// </summary>
+        /// <param name="pluginDomains"></param>
+        /// <param name="pluginSetting"></param>
         public void Init(PluginDomains pluginDomains, PluginSetting pluginSetting)
         {
             PluginDomains = pluginDomains;
