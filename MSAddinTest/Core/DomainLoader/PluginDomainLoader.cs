@@ -9,7 +9,7 @@ namespace MSAddinTest.Core.DomainLoader
     /// <summary>
     /// 程序集动态加载
     /// </summary>
-    public class PluginDomainLoader
+    public class PluginDomainLoader:MarshalByRefObject
     {
         public PluginDomainSetup PluginDomainSetup { get; private set; }
 
@@ -51,9 +51,9 @@ namespace MSAddinTest.Core.DomainLoader
 
             _appDomain = AppDomain.CreateDomain(PluginDomainSetup.ApplicationName, null, setup);
             var name = Assembly.GetExecutingAssembly().GetName().FullName;
-
             try
             {
+                _appDomain.AssemblyResolve += _appDomain_AssemblyResolve;
                 _remoteLoader = (RemoteLoader)_appDomain.CreateInstanceAndUnwrap(name, typeof(RemoteLoader).FullName);
                 _remoteLoader.LoadAssembly(PluginDomainSetup.DllFullPath);
             }
@@ -61,6 +61,13 @@ namespace MSAddinTest.Core.DomainLoader
             {
                 ;
             }
+        }
+
+        // 处理程序集引用失败
+        private Assembly _appDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            ;
+            return null;
         }
 
         /// <summary>
