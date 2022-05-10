@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 
 namespace MSAddinTest.Core
 {
@@ -12,7 +13,7 @@ namespace MSAddinTest.Core
     /// 该类实例位于子程序域中
     /// 子程序域向默认域中传递的所有值，都需要继承 MarshalByRefObject
     /// </summary>
-    public class RemoteLoader : MarshalByRefObject
+    public partial class RemoteLoader : MarshalByRefObject
     {
         private Assembly _assembly;
         private readonly List<ExecutorBase> _executors = new List<ExecutorBase>();
@@ -22,9 +23,9 @@ namespace MSAddinTest.Core
             try
             {
                 // 读取文件然后加载
-                byte[] bytes = File.ReadAllBytes(assemblyFile);
-                _assembly = Assembly.Load(bytes);
-                //_assembly = Assembly.LoadFrom(assemblyFile);
+                //byte[] bytes = File.ReadAllBytes(assemblyFile);
+                //_assembly = Assembly.Load(bytes);
+                _assembly = Assembly.LoadFrom(assemblyFile);
                 //return _assembly;
 
                 var results = BuilderExecutors(_assembly);
@@ -35,6 +36,42 @@ namespace MSAddinTest.Core
                 throw ex;
             }
         }
+
+        #region 加载需要的程序集
+        private string _msBaseName;
+        private List<string> _allFileNames;
+        public void SetAssemblyResolver(string msBaseName)
+        {
+            _msBaseName = msBaseName;
+            _allFileNames = Directory.GetFiles(_msBaseName, "*.dll", SearchOption.AllDirectories).ToList();
+
+            var appDomain = AppDomain.CurrentDomain;
+            appDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            appDomain.UnhandledException += CurrentDomain_UnhandledException;
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            ;
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            // 加载 MS 中的程序集
+            // 判断是否已经加载
+            var exist = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName == args.Name);
+            if (exist != null) return exist;
+
+            // 找到文件，然后加载
+            string targetFileName = args.Name.Split(',')[0];
+            string fileName = _allFileNames.Find(x => x.Contains(targetFileName));
+            if(fileName == null)return null;
+
+            var assembly = Assembly.Load(fileName); 
+
+            return assembly;
+        }
+        #endregion
 
         /// <summary>
         /// 生成执行器

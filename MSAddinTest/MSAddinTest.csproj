@@ -83,6 +83,7 @@
     <Compile Include="Core\PluginDomains.cs" />
     <Compile Include="Core\PluginManager.cs" />
     <Compile Include="Core\RemoteLoader.cs" />
+    <Compile Include="Core\MsAssemblyResolve.cs" />
     <Compile Include="Core\Settings\PluginSetting.cs" />
     <Compile Include="Core\StatusCode.cs" />
     <Compile Include="Index\KeyinFuncs.cs" />

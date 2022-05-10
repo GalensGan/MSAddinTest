@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MSAddinTest.Core.Command
 {
@@ -45,7 +46,11 @@ namespace MSAddinTest.Core.Command
                 };
 
                 var loader = new PluginDomainLoader(setup);
-                loader.LoadAssembly();
+                if (!loader.LoadAssembly())
+                {
+                    MessageBox.Show("插件加载失败");
+                    return false;
+                }
                 PluginDomains.Add(loader);
 
                 AssemblyLoaded(loader);

@@ -9,7 +9,7 @@ namespace MSAddinTest.Core.DomainLoader
     /// <summary>
     /// 程序集动态加载
     /// </summary>
-    public class PluginDomainLoader:MarshalByRefObject
+    public class PluginDomainLoader
     {
         public PluginDomainSetup PluginDomainSetup { get; private set; }
 
@@ -32,7 +32,7 @@ namespace MSAddinTest.Core.DomainLoader
         /// 在程序域中加载程序集
         /// </summary>
         /// <param name="assemblyFile"></param>
-        public void LoadAssembly()
+        public bool LoadAssembly()
         {
             var currentDomainBaseDir = AppDomain.CurrentDomain.BaseDirectory;
             // 配置参考：https://docs.microsoft.com/en-us/dotnet/api/system.appdomainsetup?view=netframework-4.8
@@ -49,25 +49,21 @@ namespace MSAddinTest.Core.DomainLoader
             // 设置原因参考：https://www.cnblogs.com/changrulin/p/4762816.html
             AppDomain.CurrentDomain.SetupInformation.ShadowCopyFiles = "true";
 
-            _appDomain = AppDomain.CreateDomain(PluginDomainSetup.ApplicationName, null, setup);
-            var name = Assembly.GetExecutingAssembly().GetName().FullName;
             try
             {
-                _appDomain.AssemblyResolve += _appDomain_AssemblyResolve;
-                _remoteLoader = (RemoteLoader)_appDomain.CreateInstanceAndUnwrap(name, typeof(RemoteLoader).FullName);
-                _remoteLoader.LoadAssembly(PluginDomainSetup.DllFullPath);
-            }
-            catch(Exception e)
-            {
-                ;
-            }
-        }
+                _appDomain = AppDomain.CreateDomain(PluginDomainSetup.ApplicationName, null, setup);
+                var name = Assembly.GetExecutingAssembly().GetName().FullName;
 
-        // 处理程序集引用失败
-        private Assembly _appDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            ;
-            return null;
+                _remoteLoader = (RemoteLoader)_appDomain.CreateInstanceAndUnwrap(name, typeof(RemoteLoader).FullName);
+                _remoteLoader.SetAssemblyResolver(AppDomain.CurrentDomain.BaseDirectory);
+                _remoteLoader.LoadAssembly(PluginDomainSetup.DllFullPath);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         /// <summary>

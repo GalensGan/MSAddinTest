@@ -17,6 +17,7 @@ namespace MSAddinTest.Core.DomainLoader
         {
             // 获取缓存的位置
             CachePath = ConfigurationManager.GetVariable("_USTN_HOMEROOT") + @"\MsAddinTest";
+            ApplicationBase = @"D:\Personal\Attempt\MSAddinTest\TestAddinPlugin\bin\Debug";
         }
 
         public string PluginName { get; set; }
@@ -36,7 +37,7 @@ namespace MSAddinTest.Core.DomainLoader
         /// 用来查找程序集用
         /// 多个目录用分号分隔
         /// </summary>
-        public string PrivateBinPath { get; set; } = "Assemblies;Assemblies\\ECFramework";
+        public string PrivateBinPath { get; set; } = "Assemblies;Assemblies\\ECFramework;Mdlapps";
 
         /// <summary>
         /// 插件库文件缓存的位置
