@@ -1,4 +1,4 @@
-﻿using MSAddinTest.Core.DomainLoader;
+﻿using MSAddinTest.Core.Loader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace MSAddinTest.Core.Command
     /// </summary>
     internal class LoadAddinPluginCommand: LoadPluginCommand
     {
-        protected override void AssemblyLoaded(PluginDomainLoader loader)
+        protected override void AssemblyLoaded(PluginAssemblyLoader loader)
         {
             base.AssemblyLoaded(loader);
 

@@ -1,5 +1,6 @@
 ﻿using MSAddinTest.Core;
 using MSAddinTest.Core.Command;
+using MSAddinTest.MSTestInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace MSAddinTest.Index
         /// </summary>
         public static void TestPlugin(string unparsed)
         {
-            var cmd = new RunPluginCommand(unparsed, new PluginInterface.PluginArg());
+            var cmd = new RunPluginCommand(unparsed, new MSTestArg());
             PluginManager.Manager.InvokeCommand(cmd);
         }
     }

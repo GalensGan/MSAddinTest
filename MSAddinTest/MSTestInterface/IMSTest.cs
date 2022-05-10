@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSAddinTest.PluginInterface
+namespace MSAddinTest.MSTestInterface
 {
     /// <summary>
-    /// 用于主子域间传递参数
+    /// 插件接口
+    /// 继承该接口必须有一个无参的构造函数供管理器初始化
     /// </summary>
-    public class PluginArg:MarshalByRefObject
+    public interface IMSTest
     {
        
     }

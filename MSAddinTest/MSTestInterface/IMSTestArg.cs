@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSAddinTest.PluginInterface
+namespace MSAddinTest.MSTestInterface
 {
     /// <summary>
-    /// 插件接口
-    /// 继承该接口必须有一个无参的构造函数
+    /// 命令间传递的参数接口
     /// </summary>
-    public interface IPlugin
+    public interface IMSTestArg
     {
        
     }

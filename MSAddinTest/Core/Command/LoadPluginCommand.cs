@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using MSAddinTest.Core.DomainLoader;
+using MSAddinTest.Core.Loader;
 using MSAddinTest.Core.Settings;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace MSAddinTest.Core.Command
     internal class LoadPluginCommand : CommandBase
     {
         // 执行命令
-        public override object Start()
+        public override FuncResult Start()
         {
             // 打开选择窗体
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -26,7 +26,10 @@ namespace MSAddinTest.Core.Command
                 Multiselect = true,
             };
             var result = openFileDialog.ShowDialog();
-            if (result == null || !(bool)result) return StatusCode.Failed;
+            if (result == null || !(bool)result) return new FuncResult(false)
+            {
+                StatusCode = StatusCode.Failed
+            };
 
             var dllPaths = openFileDialog.FileNames;
 
@@ -34,39 +37,43 @@ namespace MSAddinTest.Core.Command
             {
                 string pluginName = Path.GetFileNameWithoutExtension(dllPath);
 
-                if (PluginDomains.ContainsKey(pluginName))
+                if (PluginContainer.ContainsKey(pluginName))
                 {
-                    return StatusCode.AlreadyLoaded;
+                    return new FuncResult(false)
+                    {
+                        StatusCode = StatusCode.AlreadyLoaded
+                    };
                 }
 
-                var setup = new PluginDomainSetup()
+                var setup = new LoaderSetup()
                 {
                     PluginName = pluginName,
                     DllFullPath = dllPath,
                 };
 
-                var loader = new PluginDomainLoader(setup);
-                if (!loader.LoadAssembly())
+                var loader = new PluginAssemblyLoader(setup);
+                var loaderRes = loader.LoadAssembly();
+                if (loaderRes.NotOk)
                 {
-                    MessageBox.Show("插件加载失败");
-                    return false;
+                    MessageBox.Show(loaderRes.Message);
+                    return loaderRes;
                 }
-                PluginDomains.Add(loader);
+                PluginContainer.Add(loader);
 
                 AssemblyLoaded(loader);
             }
 
-            return StatusCode.Success;
+            return new FuncResult(true);
         }
 
         /// <summary>
         /// 保存到文件记录中
         /// </summary>
         /// <param name="loader"></param>
-        protected virtual void AssemblyLoaded(PluginDomainLoader loader)
+        protected virtual void AssemblyLoaded(PluginAssemblyLoader loader)
         {
             // 加载成功后，将加载记录添加到本地设置中，方便下次调用
-            PluginSetting.AddPlugin(loader.PluginDomainSetup.PluginName, loader.PluginDomainSetup.DllFullPath, true);
+            PluginSetting.AddPlugin(loader.Setup.PluginName, loader.Setup.DllFullPath, true);
             PluginSetting.Save();
         }
     }

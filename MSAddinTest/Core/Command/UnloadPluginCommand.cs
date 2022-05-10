@@ -21,18 +21,12 @@ namespace MSAddinTest.Core.Command
         /// </summary>
         private string _pluginNameToUnload { get; set; }
 
-        public override object Start()
+        public override FuncResult Start()
         {
-            var pluginDomainLoader = PluginDomains[_pluginNameToUnload];
-            if (pluginDomainLoader == null) return StatusCode.NotFound;
-
-            // 卸载插件
-            pluginDomainLoader.Unload();
-
             // 移除插件域,让 GC 回收
-            PluginDomains.Remove(_pluginNameToUnload);
+            PluginContainer.Remove(_pluginNameToUnload);
 
-            return StatusCode.Success;
+            return new FuncResult(true);
         }
     }
 }

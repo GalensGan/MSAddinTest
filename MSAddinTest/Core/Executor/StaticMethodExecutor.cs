@@ -1,4 +1,4 @@
-﻿using MSAddinTest.PluginInterface;
+﻿using MSAddinTest.MSTestInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +19,22 @@ namespace MSAddinTest.Core.Executor
             _methodInfo = methodInfo;
         }
 
-        public override object Execute(PluginArg plugin)
+        public override void Execute(IMSTestArg plugin)
         {
-            if (_methodInfo == null) return false;
+            if (_methodInfo == null) return;
 
             // 创建对象实例
             var instance = Activator.CreateInstance(Type);
 
             // 调用静态方法
-            _methodInfo.Invoke(instance, new object[] { plugin });
+            try
+            {
+                _methodInfo.Invoke(instance, new object[] { plugin });
 
-            return true;
+            }catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
     }
 }

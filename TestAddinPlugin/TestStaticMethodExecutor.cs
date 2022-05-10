@@ -1,7 +1,7 @@
 ﻿using Bentley.DgnPlatformNET.Elements;
 using Bentley.GeometryNET;
 using Bentley.MstnPlatformNET;
-using MSAddinTest.PluginInterface;
+using MSAddinTest.MSTestInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +11,18 @@ using System.Windows.Forms;
 
 namespace TestAddinPlugin
 {
-    public class TestStaticMethodExecutor : IStaticMethodPlugin
+    public class TestStaticMethodExecutor : IMSTest_StaticMethod
     {
-        [Plugin(Name = "static")]
-        public static object Execute(PluginArg arg)
+        [MSTest(Name = "static")]
+        public static object Execute(IMSTestArg arg)
         {
-            MessageBox.Show("IStaticMethodPlugin 被调用了2!");
+            MessageBox.Show("IStaticMethodPlugin 被调用了4!");
             return true;
         }
 
 
-        [Plugin(Name = "newElement")]
-        public static object NewElement(PluginArg arg)
+        [MSTest(Name = "element")]
+        public static object NewElement(IMSTestArg arg)
         {
             // 绘制一个元素
             CurvePrimitive line = CurvePrimitive.CreateLineString(new List<DPoint3d>()
@@ -38,6 +38,13 @@ namespace TestAddinPlugin
             if (et != null) et.AddToModel();
 
             MessageBox.Show("绘制元素成功!");
+            return true;
+        }
+
+        [MSTest(Name ="ref")]
+        public static object TestReference(IMSTestArg arg)
+        {
+            TestPlugin.Test.ReferenceInvoke();
             return true;
         }
     }

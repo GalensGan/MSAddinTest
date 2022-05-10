@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSAddinTest.PluginInterface
+namespace MSAddinTest.MSTestInterface
 {
     /// <summary>
     /// 静态方法的入口
     /// </summary>
-    public interface IStaticMethodPlugin : IPlugin
+    public interface IMSTest_StaticMethod : IMSTest
     {
     }
 }

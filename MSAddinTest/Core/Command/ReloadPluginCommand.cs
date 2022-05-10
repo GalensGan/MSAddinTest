@@ -17,11 +17,15 @@ namespace MSAddinTest.Core.Command
             _pluginName = pluginName;
         }
 
-        public override object Start()
+        public override FuncResult Start()
         {
-            if (PluginDomains.TryGetValue(_pluginName, out var pluginDomain)) pluginDomain.Reload();
+            if (PluginContainer.TryGetValue(_pluginName, out var container))
+            {
+                container.Reload();
+                System.Windows.MessageBox.Show("重载成功！");
+            }
 
-            return true;
+            return new FuncResult(true);
         }
     }
 }

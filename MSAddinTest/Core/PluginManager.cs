@@ -22,7 +22,7 @@ namespace MSAddinTest.Core
         /// </summary>
         private PluginSetting _pluginSetting;
 
-        private PluginDomains _pluginDomains = new PluginDomains();
+        private PluginDomainContainer _pluginDomains = new PluginDomainContainer();
 
         public PluginManager(object args)
         {
@@ -39,7 +39,7 @@ namespace MSAddinTest.Core
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public object InvokeCommand(IPluginCommand command)
+        public FuncResult InvokeCommand(IPluginCommand command)
         {
             // 调用插件
             command.Init(_pluginDomains, _pluginSetting);

@@ -1,4 +1,4 @@
-﻿using MSAddinTest.PluginInterface;
+﻿using MSAddinTest.MSTestInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace MSAddinTest.Core.Command
     /// </summary>
     internal class RunPluginCommand : CommandBase
     {
-        private PluginArg _args;
+        private IMSTestArg _args;
         private string _executorName;
 
         /// <summary>
@@ -21,19 +21,19 @@ namespace MSAddinTest.Core.Command
         /// </summary>
         /// <param name="excutorName"></param>
         /// <param name="args"></param>
-        public RunPluginCommand(string excutorName, PluginArg args)
+        public RunPluginCommand(string excutorName, IMSTestArg args)
         {
             _executorName = excutorName;
             _args = args;
         }
 
-        public override object Start()
+        public override FuncResult Start()
         {
             int executorsCount = 0;
-            foreach (var kv in PluginDomains)
+            foreach (var kv in PluginContainer)
             {
                 var result = kv.Value.Execute(_executorName, _args);
-                if (result is int count) executorsCount += count;
+                if (result.Data is int count) executorsCount += count;
             }
 
             if(executorsCount == 0)
@@ -41,7 +41,7 @@ namespace MSAddinTest.Core.Command
                 MessageBox.Show($"未找到名为{_executorName}的执行器");
             }
 
-            return executorsCount>0;
+            return new FuncResult(executorsCount > 0);
         }
     }
 }

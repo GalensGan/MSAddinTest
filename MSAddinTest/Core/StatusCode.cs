@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace MSAddinTest.Core
 {
-    internal enum StatusCode
+    /// <summary>
+    /// 状态码
+    /// </summary>
+    public enum StatusCode
     {
         Success,
         Failed,

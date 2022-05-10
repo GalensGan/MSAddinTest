@@ -8,8 +8,8 @@ namespace MSAddinTest.Core.Command
 {
     internal interface IPluginCommand
     {
-        void Init(PluginDomains pluginDomains, Settings.PluginSetting pluginSetting);
+        void Init(PluginDomainContainer pluginDomains, Settings.PluginSetting pluginSetting);
 
-        object Start();
+        FuncResult Start();
     }
 }

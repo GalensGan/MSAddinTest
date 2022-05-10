@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSAddinTest.PluginInterface
+namespace MSAddinTest.MSTestInterface
 {
-    public class AddinPluginArg:PluginArg
+    /// <summary>
+    /// 执行测试器传递的参数
+    /// </summary>
+    public class MSTestArg:IMSTestArg
     {
         public string UnparsedParams { get; set; }
-
-        public AddIn AddIn { get; set; }
     }
 }

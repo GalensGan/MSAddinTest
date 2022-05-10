@@ -75,30 +75,30 @@
     <Compile Include="Core\Command\ReloadPluginCommand.cs" />
     <Compile Include="Core\Command\RunPluginCommand.cs" />
     <Compile Include="Core\Command\UnloadPluginCommand.cs" />
-    <Compile Include="Core\DomainLoader\PluginDomainLoader.cs" />
-    <Compile Include="Core\DomainLoader\PluginDomainSetup.cs" />
-    <Compile Include="Core\Executor\AddinExecutor.cs" />
+    <Compile Include="Core\FuncResult.cs" />
+    <Compile Include="Core\Loader\PluginAssemblyLoader.cs" />
+    <Compile Include="Core\Loader\LoaderSetup.cs" />
     <Compile Include="Core\Executor\ClassExecutor.cs" />
     <Compile Include="Core\Executor\ExecutorBase.cs" />
     <Compile Include="Core\Executor\StaticMethodExecutor.cs" />
-    <Compile Include="Core\PluginDomains.cs" />
+    <Compile Include="Core\Loader\PluginAssemblyLoader_Events.cs" />
+    <Compile Include="Core\Loader\PluginAssemblyLoader_Methods.cs" />
+    <Compile Include="Core\PluginDomainContainer.cs" />
     <Compile Include="Core\PluginManager.cs" />
-    <Compile Include="Core\RemoteLoader.cs" />
-    <Compile Include="Core\MsAssemblyResolve.cs" />
     <Compile Include="Core\Settings\PluginSetting.cs" />
     <Compile Include="Core\StatusCode.cs" />
     <Compile Include="Index\KeyinFuncs.cs" />
     <Compile Include="Index\MSAddin.cs" />
-    <Compile Include="PluginInterface\AddinPlugin.cs" />
-    <Compile Include="PluginInterface\AddinPluginArg.cs" />
+    <Compile Include="MSTestInterface\MSTest_Addin.cs" />
+    <Compile Include="MSTestInterface\MSTestArg.cs" />
     <Compile Include="Utils\Ex_Json.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PluginInterface\IClassPlugin.cs" />
-    <Compile Include="PluginInterface\IPlugin.cs" />
-    <Compile Include="PluginInterface\IStaticMethodPlugin.cs" />
-    <Compile Include="PluginInterface\PluginArg.cs" />
-    <Compile Include="PluginInterface\PluginAttribute.cs" />
+    <Compile Include="MSTestInterface\IMSTest_Class.cs" />
+    <Compile Include="MSTestInterface\IMSTest.cs" />
+    <Compile Include="MSTestInterface\IMSTest_StaticMethod.cs" />
+    <Compile Include="MSTestInterface\IMSTestArg.cs" />
+    <Compile Include="MSTestInterface\MSTestAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

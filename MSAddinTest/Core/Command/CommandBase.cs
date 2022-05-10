@@ -12,7 +12,7 @@ namespace MSAddinTest.Core.Command
     /// </summary>
     internal abstract class CommandBase: IPluginCommand
     {
-        protected PluginDomains PluginDomains { get; private set; }
+        protected PluginDomainContainer PluginContainer { get; private set; }
         protected PluginSetting PluginSetting { get; private set; }
 
         /// <summary>
@@ -20,12 +20,12 @@ namespace MSAddinTest.Core.Command
         /// </summary>
         /// <param name="pluginDomains"></param>
         /// <param name="pluginSetting"></param>
-        public void Init(PluginDomains pluginDomains, PluginSetting pluginSetting)
+        public void Init(PluginDomainContainer pluginDomains, PluginSetting pluginSetting)
         {
-            PluginDomains = pluginDomains;
+            PluginContainer = pluginDomains;
             PluginSetting = pluginSetting;
         }
 
-        public abstract object Start();
+        public abstract FuncResult Start();
     }
 }

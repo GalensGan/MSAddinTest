@@ -1,4 +1,4 @@
-﻿using MSAddinTest.PluginInterface;
+﻿using MSAddinTest.MSTestInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +14,13 @@ namespace MSAddinTest.Core.Executor
     {
         public ClassExecutor(Type type) : base(type) { }
 
-        public override object Execute(PluginArg pluginArg)
+        public override void Execute(IMSTestArg pluginArg)
         {
             var instance = Activator.CreateInstance(Type);
-            if (instance is IClassPlugin plugin)
+            if (instance is IMSTest_Class plugin)
             {
-                return plugin.Execute(pluginArg);
+                plugin.Execute(pluginArg);
             }
-
-            return false;
         }
     }
 }

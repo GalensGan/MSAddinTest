@@ -11,6 +11,6 @@ namespace MSAddinTest.Core.Command
     /// </summary>
     internal interface ICommandInvoker
     {
-        object InvokeCommand(IPluginCommand command); 
+        FuncResult InvokeCommand(IPluginCommand command); 
     }
 }
