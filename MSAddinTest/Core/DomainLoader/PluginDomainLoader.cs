@@ -34,36 +34,10 @@ namespace MSAddinTest.Core.DomainLoader
         /// <param name="assemblyFile"></param>
         public bool LoadAssembly()
         {
-            var currentDomainBaseDir = AppDomain.CurrentDomain.BaseDirectory;
-            // 配置参考：https://docs.microsoft.com/en-us/dotnet/api/system.appdomainsetup?view=netframework-4.8
-            AppDomainSetup setup = new AppDomainSetup
-            {
-                ApplicationName = PluginDomainSetup.ApplicationName,
-                ApplicationBase = PluginDomainSetup.ApplicationBase,
-                PrivateBinPath = PluginDomainSetup.PrivateBinPath,
-                CachePath = PluginDomainSetup.CachePath,
-                ShadowCopyFiles = "true",
-                ShadowCopyDirectories = currentDomainBaseDir,
-            };
-
-            // 设置原因参考：https://www.cnblogs.com/changrulin/p/4762816.html
-            AppDomain.CurrentDomain.SetupInformation.ShadowCopyFiles = "true";
-
-            try
-            {
-                _appDomain = AppDomain.CreateDomain(PluginDomainSetup.ApplicationName, null, setup);
-                var name = Assembly.GetExecutingAssembly().GetName().FullName;
-
-                _remoteLoader = (RemoteLoader)_appDomain.CreateInstanceAndUnwrap(name, typeof(RemoteLoader).FullName);
-                _remoteLoader.SetAssemblyResolver(AppDomain.CurrentDomain.BaseDirectory);
-                _remoteLoader.LoadAssembly(PluginDomainSetup.DllFullPath);
-
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
+            _remoteLoader = new RemoteLoader();
+            _remoteLoader.SetAssemblyResolver(AppDomain.CurrentDomain.BaseDirectory);
+            _remoteLoader.LoadAssembly(PluginDomainSetup.DllFullPath);
+            return true;
         }
 
         /// <summary>
@@ -71,13 +45,7 @@ namespace MSAddinTest.Core.DomainLoader
         /// </summary>
         public void Unload()
         {
-            if (_appDomain == null) return;
-            AppDomain.Unload(_appDomain);
-            _appDomain = null;
-            _remoteLoader = null;
-
-            // 删除程序生成的文件
-            Directory.Delete(Path.Combine(PluginDomainSetup.CachePath, PluginDomainSetup.ApplicationName), true);
+            ;
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace TestAddinPlugin
         [Plugin(Name = "static")]
         public static object Execute(PluginArg arg)
         {
-            MessageBox.Show("IStaticMethodPlugin 被调用了!");
+            MessageBox.Show("IStaticMethodPlugin 被调用了2!");
             return true;
         }
 

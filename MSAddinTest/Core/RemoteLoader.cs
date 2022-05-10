@@ -25,8 +25,6 @@ namespace MSAddinTest.Core
                 // 读取文件然后加载
                 byte[] bytes = File.ReadAllBytes(assemblyFile);
                 _assembly = Assembly.Load(bytes);
-                //_assembly = Assembly.LoadFrom(assemblyFile);
-                //return _assembly;
 
                 var results = BuilderExecutors(_assembly);
                 _executors.AddRange(results);
