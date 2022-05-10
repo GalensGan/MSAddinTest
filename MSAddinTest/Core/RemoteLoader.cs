@@ -23,9 +23,9 @@ namespace MSAddinTest.Core
             try
             {
                 // 读取文件然后加载
-                //byte[] bytes = File.ReadAllBytes(assemblyFile);
-                //_assembly = Assembly.Load(bytes);
-                _assembly = Assembly.LoadFrom(assemblyFile);
+                byte[] bytes = File.ReadAllBytes(assemblyFile);
+                _assembly = Assembly.Load(bytes);
+                //_assembly = Assembly.LoadFrom(assemblyFile);
                 //return _assembly;
 
                 var results = BuilderExecutors(_assembly);
@@ -47,12 +47,19 @@ namespace MSAddinTest.Core
 
             var appDomain = AppDomain.CurrentDomain;
             appDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            appDomain.TypeResolve += AppDomain_TypeResolve;
             appDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             ;
+        }
+
+        // 某个类型未找到时，去加载类型
+        private Assembly AppDomain_TypeResolve(object sender, ResolveEventArgs args)
+        {
+           return CurrentDomain_AssemblyResolve(sender, args);
         }
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
@@ -65,9 +72,10 @@ namespace MSAddinTest.Core
             // 找到文件，然后加载
             string targetFileName = args.Name.Split(',')[0];
             string fileName = _allFileNames.Find(x => x.Contains(targetFileName));
-            if(fileName == null)return null;
+            if (fileName == null) return null;
 
-            var assembly = Assembly.Load(fileName); 
+            byte[] bytes = File.ReadAllBytes(fileName);
+            var assembly = Assembly.Load(bytes);
 
             return assembly;
         }
@@ -84,9 +92,12 @@ namespace MSAddinTest.Core
             // 获取类执行器
             results.AddRange(GenerateClassExecutor(assembly));
 
+            // 静态方法执行器
+            results.AddRange(GenerateStaticMethodExecutor(assembly));
+
             return results;
         }
-        
+
         // 获取类执行器
         private IEnumerable<ExecutorBase> GenerateClassExecutor(Assembly assembly)
         {
@@ -95,7 +106,6 @@ namespace MSAddinTest.Core
             // 生成运行数据
             var iPluginType = typeof(IClassPlugin);
             var pluginTypes = _assembly.GetTypes().Where(x => !x.IsInterface && !x.IsAbstract && iPluginType.IsAssignableFrom(x));
-            int count = pluginTypes.Count();
             // 获取非 addin 插件
             {
                 var commonPluginTypes = pluginTypes;
@@ -122,9 +132,43 @@ namespace MSAddinTest.Core
             return results;
         }
 
-        private void GetStaticMethodExecutor(Assembly assembly)
+        // 读取静态执行器
+        private IEnumerable<ExecutorBase> GenerateStaticMethodExecutor(Assembly assembly)
         {
+            List<ExecutorBase> results = new List<ExecutorBase>();
 
+            // 生成运行数据
+            var iPluginType = typeof(IStaticMethodPlugin);
+            var pluginTypes = _assembly.GetTypes().Where(x => !x.IsInterface && !x.IsAbstract && iPluginType.IsAssignableFrom(x));
+            int count = pluginTypes.Count();
+            // 获取静态方法执行器
+            {
+                var commonPluginTypes = pluginTypes;
+                foreach (var pluginType in commonPluginTypes)
+                {
+                    var methodInfos = pluginType.GetMethods().Where(x => x.GetCustomAttribute(typeof(PluginAttribute)) != null);
+                    foreach (var methodInfo in methodInfos)
+                    {
+                        var classExecutor = new StaticMethodExecutor(pluginType, methodInfo);
+
+                        // 获取入口描述
+                        var pluginAttr = methodInfo.GetCustomAttributes(typeof(PluginAttribute)).FirstOrDefault();
+                        if (pluginAttr is PluginAttribute attr)
+                        {
+                            classExecutor.Name = attr.Name;
+                            classExecutor.Description = attr.Description;
+                        }
+                        else
+                        {
+                            classExecutor.Name = methodInfo.Name;
+                        }
+
+                        results.Add(classExecutor);
+                    }
+                }
+            }
+
+            return results;
         }
 
 
@@ -136,7 +180,8 @@ namespace MSAddinTest.Core
         /// <returns></returns>
         public object Execute(string name, PluginArg arg)
         {
-            var executors = _executors.FindAll(x => x.Name == name);
+            // 名称不区分大小写
+            var executors = _executors.FindAll(x => x.Name.ToLower() == name.ToLower());
 
             foreach (var executor in executors)
             {

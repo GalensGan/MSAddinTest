@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,13 +13,23 @@ namespace MSAddinTest.Core.Executor
     /// </summary>
     internal class StaticMethodExecutor : ExecutorBase
     {
-        public StaticMethodExecutor(Type type) : base(type)
+        private MethodInfo _methodInfo;
+        public StaticMethodExecutor(Type type, MethodInfo methodInfo) : base(type)
         {
+            _methodInfo = methodInfo;
         }
 
         public override object Execute(PluginArg plugin)
         {
-            throw new NotImplementedException();
+            if (_methodInfo == null) return false;
+
+            // 创建对象实例
+            var instance = Activator.CreateInstance(Type);
+
+            // 调用静态方法
+            _methodInfo.Invoke(instance, new object[] { plugin });
+
+            return true;
         }
     }
 }

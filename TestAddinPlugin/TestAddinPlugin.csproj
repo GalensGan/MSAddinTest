@@ -36,6 +36,23 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bentley.DgnPlatformNET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4bf6c96a266e58d4, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\Bentley.DgnPlatformNET.dll</HintPath>
+    </Reference>
+    <Reference Include="Bentley.GeometryNET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4bf6c96a266e58d4, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\Bentley.GeometryNET.dll</HintPath>
+    </Reference>
+    <Reference Include="Bentley.GeometryNET.Structs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4bf6c96a266e58d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\Bentley.GeometryNET.Structs.dll</HintPath>
+    </Reference>
+    <Reference Include="MSAddinTest, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\sw_Bentley\OpenRoads\sw_Standards\mdlapps\MSAddinTest.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -47,6 +64,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="ustation">
       <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\ustation.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +72,7 @@
     <Compile Include="TestAddin\PluginAddin.cs" />
     <Compile Include="TestAddin\PluginKeyinFuncs.cs" />
     <Compile Include="TestClassExecutor.cs" />
+    <Compile Include="TestStaticMethodExecutor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -63,12 +82,6 @@
       <SubType>Designer</SubType>
       <LogicalName>CommandTable.xml</LogicalName>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MSAddinTest\MSAddinTest.csproj">
-      <Project>{21D13145-F4B6-41D7-9DDD-0D9E4C128C09}</Project>
-      <Name>MSAddinTest</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

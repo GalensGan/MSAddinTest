@@ -77,6 +77,7 @@
     <Compile Include="Core\Command\UnloadPluginCommand.cs" />
     <Compile Include="Core\DomainLoader\PluginDomainLoader.cs" />
     <Compile Include="Core\DomainLoader\PluginDomainSetup.cs" />
+    <Compile Include="Core\Executor\AddinExecutor.cs" />
     <Compile Include="Core\Executor\ClassExecutor.cs" />
     <Compile Include="Core\Executor\ExecutorBase.cs" />
     <Compile Include="Core\Executor\StaticMethodExecutor.cs" />
@@ -88,6 +89,8 @@
     <Compile Include="Core\StatusCode.cs" />
     <Compile Include="Index\KeyinFuncs.cs" />
     <Compile Include="Index\MSAddin.cs" />
+    <Compile Include="PluginInterface\AddinPlugin.cs" />
+    <Compile Include="PluginInterface\AddinPluginArg.cs" />
     <Compile Include="Utils\Ex_Json.cs" />
   </ItemGroup>
   <ItemGroup>

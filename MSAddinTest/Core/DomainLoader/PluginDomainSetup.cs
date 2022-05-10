@@ -16,7 +16,7 @@ namespace MSAddinTest.Core.DomainLoader
         public PluginDomainSetup()
         {
             // 获取缓存的位置
-            CachePath = ConfigurationManager.GetVariable("_USTN_HOMEROOT") + @"\MsAddinTest";
+            CachePath = ConfigurationManager.GetVariable("_USTN_HOMEROOT") + @"MsAddinTest";
             ApplicationBase = @"D:\Personal\Attempt\MSAddinTest\TestAddinPlugin\bin\Debug";
         }
 

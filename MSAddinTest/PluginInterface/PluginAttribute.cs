@@ -9,7 +9,7 @@ namespace MSAddinTest.PluginInterface
     /// <summary>
     /// Plugin特性
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class PluginAttribute:Attribute
     {
         /// <summary>
