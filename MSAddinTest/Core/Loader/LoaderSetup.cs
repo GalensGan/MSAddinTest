@@ -28,13 +28,13 @@ namespace MSAddinTest.Core.Loader
             set
             {
                 _dllFullPath = value;
-                CurrentDomainBaseDirectory = System.IO.Path.GetDirectoryName(_dllFullPath);
+                BaseDirectory = System.IO.Path.GetDirectoryName(_dllFullPath);
             }
         }
 
         /// <summary>
         /// 当前程序集根目录
         /// </summary>
-        public string CurrentDomainBaseDirectory { get; private set; }
+        public string BaseDirectory { get; private set; }
     }
 }

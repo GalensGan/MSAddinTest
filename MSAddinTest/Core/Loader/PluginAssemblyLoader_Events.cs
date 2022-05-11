@@ -34,8 +34,13 @@ namespace MSAddinTest.Core.Loader
         }
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {            
-            // 对于引用，每次都需要加载，才能保证版本一致
+        {
+            // 获取对应版本的程序集
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            Assembly targetAssembly = assemblies.LastOrDefault(x => x.FullName.Contains(args.Name));        
+
+            if (targetAssembly != null) return targetAssembly;
+
             // 找到文件，然后加载
             string targetFileName = args.Name.Split(',')[0];
             string fileName = _allFileNames.Find(x => x.Contains(targetFileName));

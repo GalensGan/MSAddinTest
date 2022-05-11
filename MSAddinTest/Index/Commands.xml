@@ -20,5 +20,6 @@
 		<KeyinHandler Keyin="MsTest unloadPlugin" Function="MSAddinTest.Index.KeyinFuncs.UnloadPlugin" />
 		<KeyinHandler Keyin="MsTest reloadPlugin" Function="MSAddinTest.Index.KeyinFuncs.ReloadPlugin" />
 		<KeyinHandler Keyin="MsTest testPlugin" Function="MSAddinTest.Index.KeyinFuncs.TestPlugin" />
+		<KeyinHandler Keyin="MsTest" Function="MSAddinTest.Index.KeyinFuncs.LoadPlugin" />
 	</KeyinHandlers>
 </KeyinTree>

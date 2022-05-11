@@ -11,6 +11,6 @@ namespace MSAddinTest.MSTestInterface
     /// </summary>
     public interface IMSTestArg
     {
-       
+        string UnparsedParams { get; set; }
     }
 }

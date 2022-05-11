@@ -17,11 +17,21 @@ namespace MSAddinTest.Core.Loader
         /// <returns></returns>
         public FuncResult Execute(string name, IMSTestArg arg)
         {
+            var nameTemp = name.Trim().ToLower();
+            // 对名称进行匹配
+            // 如果是 keyin，通过匹配前缀是否为 keyin 来确定
             // 名称不区分大小写
-            var executors = _executors.FindAll(x => x.Name.ToLower() == name.ToLower());
+            var executors = _executors.FindAll(x => nameTemp.StartsWith(x.Name.ToLower()));
 
             foreach (var executor in executors)
             {
+                // 获取参数
+                string strArg = name.Substring(nameTemp.IndexOf(executor.Name) + 1);
+                if (!string.IsNullOrEmpty(strArg))
+                {
+                    arg.UnparsedParams = strArg.Trim();
+                }
+
                 executor.Execute(arg);
             }
 
@@ -37,6 +47,7 @@ namespace MSAddinTest.Core.Loader
         public void Reload()
         {
             // 通过hash值对比文件是否更改
+
             LoadAssembly();
         }
     }

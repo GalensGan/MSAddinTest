@@ -21,10 +21,10 @@ namespace MSAddinTest.Core.Command
         /// </summary>
         /// <param name="excutorName"></param>
         /// <param name="args"></param>
-        public RunPluginCommand(string excutorName, IMSTestArg args)
+        public RunPluginCommand(string excutorName)
         {
             _executorName = excutorName;
-            _args = args;
+            _args = new MSTestArg();
         }
 
         public override FuncResult Start()

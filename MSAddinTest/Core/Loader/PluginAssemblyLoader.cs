@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Linq;
 
 namespace MSAddinTest.Core.Loader
 {
@@ -27,8 +28,14 @@ namespace MSAddinTest.Core.Loader
             RegistryEvents();
 
             // 获取所有 dll 文件
-            _allFileNames = Directory.GetFiles(Setup.CurrentDomainBaseDirectory, "*.dll", SearchOption.AllDirectories).ToList();
+            _allFileNames = Directory.GetFiles(Setup.BaseDirectory, "*.dll", SearchOption.AllDirectories).ToList();
+            _allFileNames.AddRange(Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll", SearchOption.AllDirectories).ToList());
+
+            _autoReloader = new AutoReloader(this);
         }
+
+        // 自动重新加载
+        private readonly AutoReloader _autoReloader;
 
         // 所有根目录下的 dll 文件
         private List<string> _allFileNames;
@@ -71,7 +78,8 @@ namespace MSAddinTest.Core.Loader
             // 静态方法执行器
             results.AddRange(GenerateStaticMethodExecutor(assembly));
 
-            GenerateAddinExecutor(assembly);
+            // 添加 addin 执行器
+            results.AddRange(GenerateAddinExecutor(assembly));
 
             return results;
         }
@@ -153,12 +161,8 @@ namespace MSAddinTest.Core.Loader
         {
             // 生成运行数据
             var iPluginType = typeof(MSTest_Addin);
-
-            var type = assembly.GetTypes().ToList();
-
-            var pluginTypes = assembly.GetTypes().Where(x => x.IsSubclassOf(iPluginType));
-
-
+            var allTypes = assembly.GetTypes();
+            var pluginTypes = allTypes.Where(x => x.IsSubclassOf(iPluginType));
 
             foreach (var pluginType in pluginTypes)
             {
@@ -176,11 +180,40 @@ namespace MSAddinTest.Core.Loader
             }
 
             // 开始读取命令表
+            var resourceNames = assembly.GetManifestResourceNames().Where(x => x.EndsWith(".xml"));
 
+            var results = new List<ExecutorBase>();
+
+            // 读取所有的命令表
+            foreach (var resourceName in resourceNames)
+            {
+                var xmlStream = assembly.GetManifestResourceStream(resourceName);
+                var xDoc = XElement.Load(xmlStream);
+                XNamespace ns = "http://www.bentley.com/schemas/1.0/MicroStation/AddIn/KeyinTree.xsd";
+                var childerens = xDoc.Descendants(ns + "KeyinHandler");
+                // 获取属性
+                foreach (XElement xElement in childerens)
+                {
+                    var keyin = xElement.Attribute("Keyin").Value;
+                    var function = xElement.Attribute("Function").Value;
+
+                    // 通过这两个参数生成执行器
+                    var lastIndex = function.LastIndexOf(".");
+                    var fullTypeName = function.Substring(0, lastIndex);
+                    var functionName = function.Substring(lastIndex + 1);
+
+                    var functionType = allTypes.FirstOrDefault(x => x.FullName == fullTypeName);
+                    if (functionType == null) continue;
+
+                    results.Add(new AddinExecutor(functionType, functionName)
+                    {
+                        Name = keyin.ToLower(),
+                    });
+                }
+            }
 
             // 通过命令表查到静态方法
-
-            return new List<ExecutorBase>();
+            return results;
         }
     }
 }

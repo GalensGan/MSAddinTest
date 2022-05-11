@@ -13,15 +13,21 @@ namespace MSAddinTest.Core.Executor
     /// </summary>
     internal class StaticMethodExecutor : ExecutorBase
     {
-        private MethodInfo _methodInfo;
+        protected MethodInfo MethodInfo { get; private set; }
         public StaticMethodExecutor(Type type, MethodInfo methodInfo) : base(type)
         {
-            _methodInfo = methodInfo;
+            MethodInfo = methodInfo;
+        }
+
+        public StaticMethodExecutor(Type type,string methodName):base(type)
+        {
+            // 获取 MethodInfo
+            MethodInfo = type.GetMethod(methodName);
         }
 
         public override void Execute(IMSTestArg plugin)
         {
-            if (_methodInfo == null) return;
+            if (MethodInfo == null) return;
 
             // 创建对象实例
             var instance = Activator.CreateInstance(Type);
@@ -29,7 +35,7 @@ namespace MSAddinTest.Core.Executor
             // 调用静态方法
             try
             {
-                _methodInfo.Invoke(instance, new object[] { plugin });
+                MethodInfo.Invoke(instance, new object[] { plugin });
 
             }catch(Exception ex)
             {

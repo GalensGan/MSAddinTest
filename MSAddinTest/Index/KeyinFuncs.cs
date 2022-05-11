@@ -46,7 +46,7 @@ namespace MSAddinTest.Index
         /// </summary>
         public static void TestPlugin(string unparsed)
         {
-            var cmd = new RunPluginCommand(unparsed, new MSTestArg());
+            var cmd = new RunPluginCommand(unparsed);
             PluginManager.Manager.InvokeCommand(cmd);
         }
     }

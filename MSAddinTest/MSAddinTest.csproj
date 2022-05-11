@@ -70,12 +70,13 @@
     <Compile Include="Core\Command\CommandBase.cs" />
     <Compile Include="Core\Command\ICommandInvoker.cs" />
     <Compile Include="Core\Command\IPluginCommand.cs" />
-    <Compile Include="Core\Command\LoadAddinPluginCommand.cs" />
     <Compile Include="Core\Command\LoadPluginCommand.cs" />
     <Compile Include="Core\Command\ReloadPluginCommand.cs" />
     <Compile Include="Core\Command\RunPluginCommand.cs" />
     <Compile Include="Core\Command\UnloadPluginCommand.cs" />
+    <Compile Include="Core\Executor\AddinExecutor.cs" />
     <Compile Include="Core\FuncResult.cs" />
+    <Compile Include="Core\Loader\AutoReloader.cs" />
     <Compile Include="Core\Loader\PluginAssemblyLoader.cs" />
     <Compile Include="Core\Loader\LoaderSetup.cs" />
     <Compile Include="Core\Executor\ClassExecutor.cs" />
