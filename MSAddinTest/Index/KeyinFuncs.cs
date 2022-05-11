@@ -49,5 +49,32 @@ namespace MSAddinTest.Index
             var cmd = new RunPluginCommand(unparsed);
             PluginManager.Manager.InvokeCommand(cmd);
         }
+
+        /// <summary>
+        /// 设置参数
+        /// </summary>
+        public static void SetPluginSettings(string unparsed)
+        {
+            var cmd = new UpdateSettingsCommand(unparsed);
+            PluginManager.Manager.InvokeCommand(cmd);
+        }
+
+        /// <summary>
+        /// 安装插件，安装后，启动时会自动加载
+        /// </summary>
+        /// <param name="unparsed"></param>
+        public static void Install(string unparsed)
+        {
+
+        }
+
+        /// <summary>
+        /// 卸载插件
+        /// </summary>
+        /// <param name="unparsed"></param>
+        public static  void Uninstall(string unparsed)
+        {
+
+        }
     }
 }

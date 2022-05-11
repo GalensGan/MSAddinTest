@@ -1,5 +1,6 @@
 ﻿using MSAddinTest.Core.Executor;
 using MSAddinTest.MSTestInterface;
+using MSAddinTest.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,10 +44,19 @@ namespace MSAddinTest.Core.Loader
         // 从程序集中读取的执行器
         private List<ExecutorBase> _executors = new List<ExecutorBase>();
 
+        private string _lastFileHash = "";
         public FuncResult LoadAssembly()
         {
             try
             {
+                // 验证文件 hash 值
+                var newFileHash = FileHelper.GetFileHash(Setup.DllFullPath);
+                if (_lastFileHash == newFileHash) 
+                    return new FuncResult(true);
+                else
+                    _lastFileHash = newFileHash;
+
+
                 // 读取文件然后加载
                 byte[] bytes = File.ReadAllBytes(Setup.DllFullPath);
                 var assembly = Assembly.Load(bytes);
@@ -58,7 +68,7 @@ namespace MSAddinTest.Core.Loader
             }
             catch (Exception ex)
             {
-                return new FuncResult(false, ex.Message);
+                return new FuncResult(false, ex.Message + ex.StackTrace);
             }
         }
 
@@ -98,19 +108,6 @@ namespace MSAddinTest.Core.Loader
                 foreach (var pluginType in commonPluginTypes)
                 {
                     var classExecutor = new ClassExecutor(pluginType);
-
-                    // 获取Plugin特定
-                    var pluginAttr = pluginType.GetCustomAttributes(typeof(MSTestAttribute)).FirstOrDefault();
-                    if (pluginAttr is MSTestAttribute attr)
-                    {
-                        classExecutor.Name = attr.Name;
-                        classExecutor.Description = attr.Description;
-                    }
-                    else
-                    {
-                        classExecutor.Name = pluginType.Name;
-                    }
-
                     results.Add(classExecutor);
                 }
             }
@@ -119,6 +116,10 @@ namespace MSAddinTest.Core.Loader
         }
 
         // 读取静态执行器
+        // 条件要求：
+        // 1-继承接口 IMSTest_StaticMethod
+        // 2-具有 MSTestAttribute 属性
+        // 3-有一个 string 类型的参数
         private IEnumerable<ExecutorBase> GenerateStaticMethodExecutor(Assembly assembly)
         {
             List<ExecutorBase> results = new List<ExecutorBase>();
@@ -134,19 +135,11 @@ namespace MSAddinTest.Core.Loader
                     var methodInfos = pluginType.GetMethods().Where(x => x.GetCustomAttribute(typeof(MSTestAttribute)) != null);
                     foreach (var methodInfo in methodInfos)
                     {
-                        var classExecutor = new StaticMethodExecutor(pluginType, methodInfo);
+                        // 获取参数
+                        var paraInfos = methodInfo.GetParameters();
+                        if (paraInfos.Length != 1 || paraInfos[0].ParameterType.Equals(typeof(string))) continue;
 
-                        // 获取入口描述
-                        var pluginAttr = methodInfo.GetCustomAttributes(typeof(MSTestAttribute)).FirstOrDefault();
-                        if (pluginAttr is MSTestAttribute attr)
-                        {
-                            classExecutor.Name = attr.Name;
-                            classExecutor.Description = attr.Description;
-                        }
-                        else
-                        {
-                            classExecutor.Name = methodInfo.Name;
-                        }
+                        var classExecutor = new StaticMethodExecutor(methodInfo);
 
                         results.Add(classExecutor);
                     }
@@ -205,10 +198,10 @@ namespace MSAddinTest.Core.Loader
                     var functionType = allTypes.FirstOrDefault(x => x.FullName == fullTypeName);
                     if (functionType == null) continue;
 
-                    results.Add(new AddinExecutor(functionType, functionName)
-                    {
-                        Name = keyin.ToLower(),
-                    });
+                    var addinExecutor = new AddinExecutor(functionType, functionName);
+                    addinExecutor.Names.Add(keyin);
+
+                    results.Add(addinExecutor);
                 }
             }
 

@@ -21,12 +21,12 @@ namespace MSAddinTest.Core.Loader
             // 对名称进行匹配
             // 如果是 keyin，通过匹配前缀是否为 keyin 来确定
             // 名称不区分大小写
-            var executors = _executors.FindAll(x => nameTemp.StartsWith(x.Name.ToLower()));
+            var executors = _executors.FindAll(x => x.IsMatch(name, out _, out _));
 
             foreach (var executor in executors)
             {
                 // 获取参数
-                string strArg = name.Substring(nameTemp.IndexOf(executor.Name) + 1);
+                executor.IsMatch(name, out var executorName, out var strArg);
                 if (!string.IsNullOrEmpty(strArg))
                 {
                     arg.UnparsedParams = strArg.Trim();
@@ -46,8 +46,6 @@ namespace MSAddinTest.Core.Loader
         /// </summary>
         public void Reload()
         {
-            // 通过hash值对比文件是否更改
-
             LoadAssembly();
         }
     }

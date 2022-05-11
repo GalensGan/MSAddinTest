@@ -1,11 +1,10 @@
 {
-  "isAutoReload": true,
-  "pluginPrefix": "pluginApp_",
   "plugins": [
-    {
-      "pluginName": "",
-      "dllFullPath": "",
-      "isAutoReload": false
-    }
+    //{
+    //  "name": "",
+    //  "dllFullPath": "",
+    //  "autoReload": true,
+    //  "autoLoad": false
+    //}
   ]
 }

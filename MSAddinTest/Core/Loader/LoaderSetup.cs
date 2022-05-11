@@ -1,4 +1,5 @@
 ﻿using Bentley.DgnPlatformNET;
+using MSAddinTest.Core.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,5 +37,10 @@ namespace MSAddinTest.Core.Loader
         /// 当前程序集根目录
         /// </summary>
         public string BaseDirectory { get; private set; }
+
+        /// <summary>
+        /// 插件设置
+        /// </summary>
+        public PluginSetting PluginSetting { get; set; }
     }
 }

@@ -71,9 +71,11 @@
     <Compile Include="Core\Command\ICommandInvoker.cs" />
     <Compile Include="Core\Command\IPluginCommand.cs" />
     <Compile Include="Core\Command\LoadPluginCommand.cs" />
+    <Compile Include="Core\Command\LoadPluginsWhenStartupCommand.cs" />
     <Compile Include="Core\Command\ReloadPluginCommand.cs" />
     <Compile Include="Core\Command\RunPluginCommand.cs" />
     <Compile Include="Core\Command\UnloadPluginCommand.cs" />
+    <Compile Include="Core\Command\UpdateSettingsCommand.cs" />
     <Compile Include="Core\Executor\AddinExecutor.cs" />
     <Compile Include="Core\FuncResult.cs" />
     <Compile Include="Core\Loader\AutoReloader.cs" />
@@ -87,12 +89,14 @@
     <Compile Include="Core\PluginDomainContainer.cs" />
     <Compile Include="Core\PluginManager.cs" />
     <Compile Include="Core\Settings\PluginSetting.cs" />
+    <Compile Include="Core\Settings\UpdateSettingArg.cs" />
     <Compile Include="Core\StatusCode.cs" />
     <Compile Include="Index\KeyinFuncs.cs" />
     <Compile Include="Index\MSAddin.cs" />
     <Compile Include="MSTestInterface\MSTest_Addin.cs" />
     <Compile Include="MSTestInterface\MSTestArg.cs" />
     <Compile Include="Utils\Ex_Json.cs" />
+    <Compile Include="Utils\FileHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MSTestInterface\IMSTest_Class.cs" />
@@ -116,6 +120,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Core\Settings\defaultSettings.json" />
     <None Include="Properties\Settings.settings">

@@ -10,34 +10,52 @@ namespace MSAddinTest.Core.Executor
 {
     /// <summary>
     /// 静态方法执行器
+    /// 传入此类的方法必须是绑定了特性的
     /// </summary>
     internal class StaticMethodExecutor : ExecutorBase
     {
         protected MethodInfo MethodInfo { get; private set; }
-        public StaticMethodExecutor(Type type, MethodInfo methodInfo) : base(type)
+        public StaticMethodExecutor(MethodInfo methodInfo) : base(null)
         {
-            MethodInfo = methodInfo;
+            SetMthodInfo(methodInfo);
         }
 
-        public StaticMethodExecutor(Type type,string methodName):base(type)
+        public StaticMethodExecutor(Type type, string methodName) : base(type)
         {
             // 获取 MethodInfo
-            MethodInfo = type.GetMethod(methodName);
+            var methodInfo = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            SetMthodInfo(methodInfo);
+        }
+
+        /// <summary>
+        /// 在此处解析方法上的特性
+        /// 如果有特性，用特性中的值覆盖
+        /// </summary>
+        /// <param name="methodInfo"></param>
+        private void SetMthodInfo(MethodInfo methodInfo)
+        {
+            MethodInfo = methodInfo;
+
+            // 获取静态方法上面的特性
+            var attribute = methodInfo.DeclaringType.GetCustomAttributes(typeof(MSTestAttribute)).FirstOrDefault();
+            if (attribute is MSTestAttribute attr)
+            {
+                Names.Add(attr.Name);
+                Description = attr.Description;
+            }
         }
 
         public override void Execute(IMSTestArg plugin)
         {
             if (MethodInfo == null) return;
 
-            // 创建对象实例
-            var instance = Activator.CreateInstance(Type);
-
             // 调用静态方法
             try
             {
-                MethodInfo.Invoke(instance, new object[] { plugin });
+                MethodInfo.Invoke(null, new object[] { plugin });
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 System.Windows.MessageBox.Show(ex.Message);
             }

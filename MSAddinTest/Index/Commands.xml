@@ -2,24 +2,29 @@
 <KeyinTree xmlns="http://www.bentley.com/schemas/1.0/MicroStation/AddIn/KeyinTree.xsd">
 	<RootKeyinTable ID="MsAddinTestKeyinRoot">
 		<Keyword SubtableRef="subKeyin" CommandWord="MsTest">
-			<Options Required="false"/>
+			<Options Required="true"/>
 		</Keyword>
 	</RootKeyinTable>
 
 	<SubKeyinTables>
 		<KeyinTable ID="subKeyin">
-			<Keyword CommandWord="loadPlugin" />
-			<Keyword CommandWord="unloadPlugin" />	
-			<Keyword CommandWord="reloadPlugin" />
-			<Keyword CommandWord="testPlugin" />	
+			<Keyword CommandWord="load" />
+			<Keyword CommandWord="unload" />	
+			<Keyword CommandWord="reload" />
+			<Keyword CommandWord="test" />
+			<Keyword CommandWord="set" />
+			<Keyword CommandWord="install" />
+			<Keyword CommandWord="uninstall" />
 		</KeyinTable>
 	</SubKeyinTables>
 
 	<KeyinHandlers>
-		<KeyinHandler Keyin="MsTest loadPlugin" Function="MSAddinTest.Index.KeyinFuncs.LoadPlugin" />
-		<KeyinHandler Keyin="MsTest unloadPlugin" Function="MSAddinTest.Index.KeyinFuncs.UnloadPlugin" />
-		<KeyinHandler Keyin="MsTest reloadPlugin" Function="MSAddinTest.Index.KeyinFuncs.ReloadPlugin" />
-		<KeyinHandler Keyin="MsTest testPlugin" Function="MSAddinTest.Index.KeyinFuncs.TestPlugin" />
-		<KeyinHandler Keyin="MsTest" Function="MSAddinTest.Index.KeyinFuncs.LoadPlugin" />
+		<KeyinHandler Keyin="MsTest load" Function="MSAddinTest.Index.KeyinFuncs.LoadPlugin" />
+		<KeyinHandler Keyin="MsTest unload" Function="MSAddinTest.Index.KeyinFuncs.UnloadPlugin" />
+		<KeyinHandler Keyin="MsTest reload" Function="MSAddinTest.Index.KeyinFuncs.ReloadPlugin" />
+		<KeyinHandler Keyin="MsTest test" Function="MSAddinTest.Index.KeyinFuncs.TestPlugin" />
+		<KeyinHandler Keyin="MsTest set" Function="MSAddinTest.Index.KeyinFuncs.SetPluginSettings" />
+		<KeyinHandler Keyin="MsTest install" Function="MSAddinTest.Index.KeyinFuncs.Install" />
+		<KeyinHandler Keyin="MsTest uninstall" Function="MSAddinTest.Index.KeyinFuncs.Uninstall" />
 	</KeyinHandlers>
 </KeyinTree>

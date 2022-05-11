@@ -9,8 +9,8 @@ namespace MSAddinTest.MSTestInterface
     /// <summary>
     /// Plugin特性
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class MSTestAttribute:Attribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
+    public class MSTestAttribute : Attribute
     {
         /// <summary>
         /// 必须是全局唯一的

@@ -19,15 +19,12 @@ namespace MSAddinTest.Core.Executor
         {
             if (MethodInfo == null) return;
 
-            // 创建对象实例
-            var instance = Activator.CreateInstance(Type);
-
             // 调用静态方法
             try
             {
                 string unparsedParams = string.Empty;
                 if (pluginArg is MSTestArg arg) unparsedParams = arg.UnparsedParams;
-                MethodInfo.Invoke(instance, new object[] { unparsedParams });
+                MethodInfo.Invoke(null, new object[] { unparsedParams });
 
             }
             catch (Exception ex)

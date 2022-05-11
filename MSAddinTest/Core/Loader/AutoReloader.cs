@@ -24,8 +24,21 @@ namespace MSAddinTest.Core.Loader
                 Filter = "*.dll",
                 NotifyFilter = NotifyFilters.LastWrite
             };
-            _watcher.Changed += Watcher_Changed;    
-            _watcher.EnableRaisingEvents = true;
+            _watcher.Changed += Watcher_Changed;
+
+            // 从设置中获取是否自动重载
+            var setting = _assemblyLoader.Setup.PluginSetting;
+            _watcher.EnableRaisingEvents = setting.IsAutoReload(_assemblyLoader.Setup.PluginName);
+
+            // 监听数据变化
+            setting.SettingChanged += (arg) =>
+            {
+                if(arg.FieldName == "autoReload" && bool.TryParse(arg.Value,out bool result))
+                {
+                    _watcher.EnableRaisingEvents = result;
+                }
+            };
+           
         }
 
         private void Watcher_Changed(object sender, FileSystemEventArgs e)

@@ -49,6 +49,7 @@ namespace MSAddinTest.Core.Command
                 {
                     PluginName = pluginName,
                     DllFullPath = dllPath,
+                    PluginSetting = PluginSetting,
                 };
 
                 var loader = new PluginAssemblyLoader(setup);
