@@ -70,10 +70,12 @@
     <Compile Include="Core\Command\CommandBase.cs" />
     <Compile Include="Core\Command\ICommandInvoker.cs" />
     <Compile Include="Core\Command\IPluginCommand.cs" />
+    <Compile Include="Core\Command\InstallCommand.cs" />
     <Compile Include="Core\Command\LoadPluginCommand.cs" />
     <Compile Include="Core\Command\LoadPluginsWhenStartupCommand.cs" />
     <Compile Include="Core\Command\ReloadPluginCommand.cs" />
     <Compile Include="Core\Command\RunPluginCommand.cs" />
+    <Compile Include="Core\Command\UninstallCommand.cs" />
     <Compile Include="Core\Command\UnloadPluginCommand.cs" />
     <Compile Include="Core\Command\UpdateSettingsCommand.cs" />
     <Compile Include="Core\Executor\AddinExecutor.cs" />
@@ -127,7 +129,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

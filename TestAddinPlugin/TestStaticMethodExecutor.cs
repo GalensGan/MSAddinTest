@@ -11,9 +11,15 @@ using System.Windows.Forms;
 
 namespace TestAddinPlugin
 {
+    /// <summary>
+    /// 测试静态方法
+    /// 1. 类继承接口 IMSTest_StaticMethod
+    /// 2. 静态方法添加特性 MSTest
+    /// 3. 静态方法有且仅有一个IMSTestArg参数
+    /// </summary>
     public class TestStaticMethodExecutor : IMSTest_StaticMethod
     {
-        [MSTest(Name = "static")]
+        [MSTest("static")]
         public static object Execute(IMSTestArg arg)
         {
             MessageBox.Show("IStaticMethodPlugin 被调用了4!");
@@ -21,7 +27,7 @@ namespace TestAddinPlugin
         }
 
 
-        [MSTest(Name = "element")]
+        [MSTest("element")]
         public static object NewElement(IMSTestArg arg)
         {
             // 绘制一个元素
@@ -41,10 +47,9 @@ namespace TestAddinPlugin
             return true;
         }
 
-        [MSTest(Name ="ref")]
+        [MSTest("ref")]
         public static object TestReference(IMSTestArg arg)
-        {
-            TestPlugin.Test.ReferenceInvoke();
+        {           
             return true;
         }
     }

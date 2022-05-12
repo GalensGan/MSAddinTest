@@ -26,7 +26,7 @@ namespace MSAddinTest.Index
             // 初始化插件管理器
             new Core.PluginManager(this);
 
-           MessageBox.Show("MSAddinTest");
+            MessageCenter.Instance.ShowInfoMessage("MSAddintTest 加载成功!","",false);
 
             return 0;
         }

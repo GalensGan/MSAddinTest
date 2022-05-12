@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSAddinTest.MSTestInterface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,10 @@ namespace TestAddinPlugin.TestAddin
 {
     internal class PluginKeyinFuncs
     {
+        [MSTest("element",Description ="这是keyin别名")]
         public static void TestElement(string unparsed)
         {
-           MessageBox.Show("我是 addin,我被调用了");
+           MessageBox.Show("我是 keyin,我被调用了");
         }
 
         public static void TestAddin(string unparsed)

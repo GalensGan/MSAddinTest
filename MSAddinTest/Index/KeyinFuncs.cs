@@ -1,8 +1,11 @@
-﻿using MSAddinTest.Core;
+﻿using Bentley.DgnPlatformNET;
+using Bentley.MstnPlatformNET;
+using MSAddinTest.Core;
 using MSAddinTest.Core.Command;
 using MSAddinTest.MSTestInterface;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,7 +68,8 @@ namespace MSAddinTest.Index
         /// <param name="unparsed"></param>
         public static void Install(string unparsed)
         {
-
+            var cmd = new InstallCommand();
+            PluginManager.Manager.InvokeCommand(cmd);
         }
 
         /// <summary>
@@ -74,7 +78,8 @@ namespace MSAddinTest.Index
         /// <param name="unparsed"></param>
         public static  void Uninstall(string unparsed)
         {
-
+            var cmd = new UninstallCommand();
+            PluginManager.Manager.InvokeCommand(cmd);
         }
     }
 }

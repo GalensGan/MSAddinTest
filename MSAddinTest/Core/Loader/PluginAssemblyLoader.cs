@@ -1,4 +1,5 @@
-﻿using MSAddinTest.Core.Executor;
+﻿using Bentley.MstnPlatformNET;
+using MSAddinTest.Core.Executor;
 using MSAddinTest.MSTestInterface;
 using MSAddinTest.Utils;
 using System;
@@ -51,8 +52,8 @@ namespace MSAddinTest.Core.Loader
             {
                 // 验证文件 hash 值
                 var newFileHash = FileHelper.GetFileHash(Setup.DllFullPath);
-                if (_lastFileHash == newFileHash) 
-                    return new FuncResult(true);
+                if (_lastFileHash == newFileHash)
+                    return new FuncResult(false, "文件未改变");
                 else
                     _lastFileHash = newFileHash;
 
@@ -137,7 +138,11 @@ namespace MSAddinTest.Core.Loader
                     {
                         // 获取参数
                         var paraInfos = methodInfo.GetParameters();
-                        if (paraInfos.Length != 1 || paraInfos[0].ParameterType.Equals(typeof(string))) continue;
+                        if (paraInfos.Length != 1 || !typeof(IMSTestArg).IsAssignableFrom(paraInfos[0].ParameterType))
+                        {
+                            MessageCenter.Instance.ShowDebugMessage($"静态方法 {methodInfo.Name} 的参数个数必须有且只有一个 IMSTestArg 参数", "", false);
+                            continue;
+                        };
 
                         var classExecutor = new StaticMethodExecutor(methodInfo);
 

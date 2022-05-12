@@ -83,11 +83,5 @@
       <LogicalName>CommandTable.xml</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TestPlugin\TestPlugin.csproj">
-      <Project>{3e501701-ea7a-43f3-989c-ae14d506882d}</Project>
-      <Name>TestPlugin</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

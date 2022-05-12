@@ -11,8 +11,10 @@ namespace TestAddinPlugin
 {
     /// <summary>
     /// 测试类执行器
+    /// 1. 继承接口 IMSTest_Class
+    /// 2. 类添加特性 MSTest
     /// </summary>
-    [MSTest(Name = "class", Description = "测试 IClassPlugin 插件")]
+    [MSTest("class", Description = "测试 IClassPlugin 插件")]
     internal class TestClassExecutor : IMSTest_Class
     {
         public void Execute(IMSTestArg arg)

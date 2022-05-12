@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Bentley.MstnPlatformNET;
+using Microsoft.Win32;
 using MSAddinTest.Core.Loader;
 using MSAddinTest.Core.Settings;
 using System;
@@ -62,6 +63,9 @@ namespace MSAddinTest.Core.Command
                 PluginContainer.Add(loader);
 
                 AssemblyLoaded(loader);
+
+                // 输出提示
+                MessageCenter.Instance.ShowInfoMessage($"{setup.PluginName} 插件加载成功!", "", false);
             }
 
             return new FuncResult(true);

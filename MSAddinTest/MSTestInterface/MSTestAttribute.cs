@@ -12,10 +12,15 @@ namespace MSAddinTest.MSTestInterface
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
     public class MSTestAttribute : Attribute
     {
+        public MSTestAttribute(string name)
+        {
+            Name = name;
+        }
+
         /// <summary>
         /// 必须是全局唯一的
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get;private set; }
 
         /// <summary>
         /// 描述
