@@ -122,6 +122,18 @@ namespace MSAddinTest.Core.Settings
                 TriggerSettingChangedEvent(settingParams);
             }
         }
+
+        public void RemovePluginSetting(string pluginName)
+        {
+            // 找到插件
+            var jToen = _jsonConfig.SelectToken($"$.plugins[?(@.name=='{pluginName}')]");
+            if (jToen == null) return;
+
+            jToen.Remove();
+
+            // 保存
+            Save();
+        }
         #endregion
 
         #region 获取设置

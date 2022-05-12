@@ -26,6 +26,9 @@ namespace MSAddinTest.Core.Command
             // 移除插件域,让 GC 回收
             PluginContainer.Remove(_pluginNameToUnload);
 
+            // 从存储中去掉记录
+            PluginSetting.RemovePluginSetting(_pluginNameToUnload);
+
             return new FuncResult(true);
         }
     }
