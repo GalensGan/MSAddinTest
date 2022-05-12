@@ -1,8 +1,8 @@
-# TestMSAddin 使用文档
+# MSAddinTest 使用文档
 
 ## 简介
 
-本插件名为：TestMSAddin，是一款面向 Microstation 的 Addin 管理测试插件。通过它，你可以在不关闭 Microstation 的情况下，重新修改编译加载 DLL 库。
+本插件名为：MSAddinTest，是一款面向 Microstation 的 Addin 管理测试插件。通过它，你可以在不关闭 Microstation 的情况下，重新修改编译加载 DLL 库。
 
 你只需在 keyin 前加上 `MSTest test` 即可调用现有的 keyin 命令。
 
@@ -34,14 +34,14 @@
 
 ### 插件安装
 
-1. 拷贝 `TestMSAddin.dll` 到 Microstaion 中的 `mdlapp` 目录里
+1. 拷贝 `MSAddinTest.dll` 到 Microstaion 中的 `mdlapp` 目录里
 2. 启动 Microstation
-3. 加载  `TestMSAddin.dll`
+3. 加载  `MSAddinTest.dll`
 4. 输入 `MSTest install` 开启自动启动。可以输入 `MSTest uninstall` 关闭自动启动。
 
 ### 测试标记
 
-TestMSAddin 支持对以下三种方式的接口进行调用。
+MSAddinTest 支持对以下三种方式的接口进行调用。
 
 #### Addin 库
 
@@ -198,6 +198,10 @@ internal class TestClassExecutor : IMSTest_Class
    <Deterministic>false</Deterministic>
    ```
 
+> **特别注意：**
+>
+> 当被引用 DLL 用于正式环境时，须将其程序集集版本号改成特定版本号，防止其它引用该 DLL 的其它库出现错误。
+
 ## 内置 Keyin 介绍
 
 ### keyin 汇总
@@ -254,7 +258,7 @@ dllName.autoLoad=true,autoReload=true
 
 ## 实现原理
 
-通过向默认域中加载不同版本的程序集（DLL）来实现 DLL 版本的更改。为了可以重新编译已加载的 DLL，需要保证加载的 DLL 在引用后不被锁定，本程序采用从内存的加载方式实现了这个需求。
+通过向默认域中加载不同版本的程序集来实现 DLL 版本的重载。为了可以重新编译已加载的 DLL，需要保证加载的 DLL 在被加载后不被锁定，本程序采用从内存的加载方式实现了这个需求。
 
 该实现是一种伪热加载的实现方法，每次加载的 Dll 都会驻留在内存中，卸载的时候某个程序集时，只是丢弃了其引用，并没有从内存里释放。
 
