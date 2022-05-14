@@ -57,7 +57,6 @@ namespace MSAddinTest.Core.Loader
                 else
                     _lastFileHash = newFileHash;
 
-
                 // 读取文件然后加载
                 byte[] bytes = File.ReadAllBytes(Setup.DllFullPath);
                 var assembly = Assembly.Load(bytes);

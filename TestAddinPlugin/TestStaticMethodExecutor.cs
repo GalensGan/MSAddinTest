@@ -2,6 +2,7 @@
 using Bentley.GeometryNET;
 using Bentley.MstnPlatformNET;
 using MSAddinTest.MSTestInterface;
+using MSUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,10 +48,11 @@ namespace TestAddinPlugin
             return true;
         }
 
-        [MSTest("ref")]
+        [MSTest("exception")]
         public static object TestReference(IMSTestArg arg)
-        {           
-            return true;
+        {
+            TestClass.NullException();
+            return false;
         }
     }
 }

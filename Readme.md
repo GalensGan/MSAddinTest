@@ -67,11 +67,15 @@ internal class PluginAddin : MSTest_Addin
 
     }
 
+    // 重写初始化方法，获取 addin 参数
     public override void Init(AddIn addin)
     {
         Instance = addin;
         Run(new string[] { });
     }
+    
+    // 在这个方法中释放资源
+    public overrride void Unloaded() { }
 
     protected override int Run(string[] commandLine)
     {
@@ -260,7 +264,7 @@ dllName.autoLoad=true,autoReload=true
 
 通过向默认域中加载不同版本的程序集来实现 DLL 版本的重载。为了可以重新编译已加载的 DLL，需要保证加载的 DLL 在被加载后不被锁定，本程序采用从内存的加载方式实现了这个需求。
 
-该实现是一种伪热加载的实现方法，每次加载的 Dll 都会驻留在内存中，卸载的时候某个程序集时，只是丢弃了其引用，并没有从内存里释放。
+该实现是一种伪热加载的实现方法，每次加载的 Dll 都会驻留在内存中，卸载某个程序集时，只是丢弃了其引用，并没有从内存里释放。
 
 可能有人要问了，为什么采用这种方式呢？
 
@@ -278,7 +282,7 @@ dllName.autoLoad=true,autoReload=true
 
 ## UI
 
-本插件预留了 UI 接口，但短期内不会实现。
+本插件预留了 UI 接口，但短期内不会实现。欢迎同志们 PR。
 
 ## 参考
 

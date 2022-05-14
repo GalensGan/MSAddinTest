@@ -20,6 +20,11 @@ namespace MSAddinTest.MSTestInterface
         /// 子类用于初始化
         /// </summary>
         /// <param name="addinArg"></param>
-        public abstract void Init(AddIn addIn);
+        public virtual void Init(AddIn addIn) { }
+
+        /// <summary>
+        /// 卸载后手动清除向 Addin 中添加的一些事件
+        /// </summary>
+        public virtual void Unloaded() { }
     }
 }

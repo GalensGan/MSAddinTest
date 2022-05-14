@@ -24,8 +24,8 @@ namespace MSAddinTest.Core.Executor
             {
                 string unparsedParams = string.Empty;
                 if (pluginArg is MSTestArg arg) unparsedParams = arg.UnparsedParams;
-                MethodInfo.Invoke(null, new object[] { unparsedParams });
 
+                MethodInfo.Invoke(null, new object[] { unparsedParams });
             }
             catch (Exception ex)
             {

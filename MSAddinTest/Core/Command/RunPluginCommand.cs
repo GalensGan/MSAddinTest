@@ -1,7 +1,10 @@
-﻿using MSAddinTest.MSTestInterface;
+﻿using Bentley.MstnPlatformNET;
+using MSAddinTest.MSTestInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,16 +30,30 @@ namespace MSAddinTest.Core.Command
             _args = new MSTestArg();
         }
 
+        /// <summary>
+        /// 特性控制可以跨程序集捕获异常
+        /// </summary>
+        /// <returns></returns>
+        //[HandleProcessCorruptedStateExceptions,SecurityCritical]
         public override FuncResult Start()
         {
             int executorsCount = 0;
-            foreach (var kv in PluginContainer)
+
+            // 全部包裹在 TryCatch中
+            try
             {
-                var result = kv.Value.Execute(_executorName, _args);
-                if (result.Data is int count) executorsCount += count;
+                foreach (var kv in PluginContainer)
+                {
+                    var result = kv.Value.Execute(_executorName, _args);
+                    if (result.Data is int count) executorsCount += count;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageCenter.Instance.ShowErrorMessage(ex.Message, ex.StackTrace, true);
             }
 
-            if(executorsCount == 0)
+            if (executorsCount == 0)
             {
                 MessageBox.Show($"未找到名为{_executorName}的执行器");
             }

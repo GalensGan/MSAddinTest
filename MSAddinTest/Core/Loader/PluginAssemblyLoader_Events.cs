@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MSAddinTest.Core.Loader
 {
@@ -19,12 +20,18 @@ namespace MSAddinTest.Core.Loader
             appDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             appDomain.TypeResolve += AppDomain_TypeResolve;
             appDomain.UnhandledException += CurrentDomain_UnhandledException;
+            appDomain.FirstChanceException += AppDomain_FirstChanceException;
+        }
+
+        private void AppDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
+        {
+            //MessageBox.Show(e.Exception.Message);
         }
 
         #region 加载需要的程序集
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            ;
+            MessageBox.Show(e.ExceptionObject.ToString());
         }
 
         // 某个类型未找到时，去加载类型

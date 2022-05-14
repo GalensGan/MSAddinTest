@@ -1,4 +1,5 @@
 ﻿using Bentley.MstnPlatformNET;
+using MSAddinTest.Core.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,10 @@ namespace MSAddinTest.Index
             new Core.PluginManager(this);
 
             MessageCenter.Instance.ShowInfoMessage("MSAddintTest 加载成功!","",false);
+
+            // 加载自启动插件
+            var cmd = new LoadPluginsWhenStartupCommand();
+            Core.PluginManager.Manager.InvokeCommand(cmd);
 
             return 0;
         }

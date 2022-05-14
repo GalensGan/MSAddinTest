@@ -46,6 +46,8 @@ namespace MSAddinTest.Core.Loader
         /// </summary>
         public void Reload()
         {
+            // 先对原来的 keyin 执行卸载程序
+
             LoadAssembly();
         }
     }
