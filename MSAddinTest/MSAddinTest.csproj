@@ -58,11 +58,11 @@
   <ItemGroup>
     <Reference Include="Bentley.DgnPlatformNET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4bf6c96a266e58d4, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\Bentley.DgnPlatformNET.dll</HintPath>
+      <HintPath>$(Microstation)\Bentley.DgnPlatformNET.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\Assemblies\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(Microstation)\Assemblies\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -77,7 +77,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="ustation">
-      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\ustation.dll</HintPath>
+      <HintPath>$(Microstation)\ustation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="WindowsBase" />

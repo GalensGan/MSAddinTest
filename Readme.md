@@ -245,6 +245,10 @@ dllName.autoLoad=true,dllName.autoReload=true
 dllName.autoLoad=true,autoReload=true
 ```
 
+> 配置文件路径为：
+>
+> "_USTN_HOMEROOT" 变量位置下的`MSAddinTest\config.json`
+
 ## VisualStudio Debug 流程
 
 **调试：**
@@ -284,14 +288,18 @@ dllName.autoLoad=true,autoReload=true
 
 本插件预留了 UI 接口，但短期内不会实现。欢迎同志们 PR。
 
-## 参考
+## 开发环境
 
-1. [C#基础--应用程序域(Appdomain) AppDomain理解_love_hot_girl的博客-CSDN博客](https://blog.csdn.net/love_hot_girl/article/details/82949177)
+1. VisualStudio 2022
+2. Microstation CE
+3. 环境变量 `Microstation`，值指向 Microstation 安装目录，路径末没有 `\` 号
 
-2. https://docs.microsoft.com/en-us/dotnet/standard/assembly/load-unload
+## 赞助与支持
 
-3. [C# 动态加载组件后怎么在开发环境中调试](https://www.cnblogs.com/DasonKwok/p/10510218.html)
+如果觉得插件不错，可以请作者喝一杯咖啡哟！
 
-4. [在C#中使用AppDomain实现【插件式】开发](https://www.cnblogs.com/mq0036/p/14646523.html)
+<div style="display:flex;justify-content:space-around;">
+<img height="200px" src="https://i.loli.net/2021/08/13/JOw9cxomhBAZFW8.png" alt="wechat">
+<img height="200px" src="https://i.loli.net/2021/08/13/U2s7gKn1zRw3uP4.png" alt="ailipay">
+<div />
 
-5. [cad.net dll动态加载和卸载](https://www.cnblogs.com/JJBox/p/13833350.html)
