@@ -75,7 +75,7 @@ internal class PluginAddin : MSTest_Addin
     }
     
     // 在这个方法中释放资源
-    public overrride void Unloaded() { }
+    public override void Unloaded() { }
 
     protected override int Run(string[] commandLine)
     {
