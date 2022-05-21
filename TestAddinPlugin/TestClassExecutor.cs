@@ -17,7 +17,7 @@ namespace TestAddinPlugin
     [MSTest("class", Description = "测试 IClassPlugin 插件")]
     internal class TestClassExecutor : IMSTest_Class
     {
-        public void Execute(IMSTestArg arg)
+        public void Execute(string arg)
         {
             MessageBox.Show("IClassPlugin 被调用了!");
         }

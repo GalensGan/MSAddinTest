@@ -1,7 +1,9 @@
 ﻿using MSAddinTest.MSTestInterface;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,27 +14,22 @@ namespace MSAddinTest.Core.Loader
         /// <summary>
         /// 实例化执行对象并执行
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="arg"></param>
+        /// <param name="nameWithParams"></param>
         /// <returns></returns>
-        public FuncResult Execute(string name, IMSTestArg arg)
+        public FuncResult Execute(string nameWithParams)
         {
-            var nameTemp = name.Trim().ToLower();
+            var nameTemp = nameWithParams.Trim().ToLower();
             // 对名称进行匹配
             // 如果是 keyin，通过匹配前缀是否为 keyin 来确定
             // 名称不区分大小写
-            var executors = _executors.FindAll(x => x.IsMatch(name, out _, out _));
+            var executors = _executors.FindAll(x => x.IsMatch(nameWithParams, out _, out _));
 
             foreach (var executor in executors)
             {
                 // 获取参数
-                executor.IsMatch(name, out var executorName, out var strArg);
-                if (!string.IsNullOrEmpty(strArg))
-                {
-                    arg.UnparsedParams = strArg.Trim();
-                }
+                executor.IsMatch(nameWithParams, out var executorName, out var strArg);                
 
-                executor.Execute(arg);
+                executor.Execute(strArg.Trim());
             }
 
             return new FuncResult(true)
@@ -41,13 +38,12 @@ namespace MSAddinTest.Core.Loader
             };
         }
 
+
         /// <summary>
         /// 重新加载
         /// </summary>
         public void Reload()
         {
-            // 先对原来的 keyin 执行卸载程序
-
             LoadAssembly();
         }
     }

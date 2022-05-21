@@ -14,6 +14,8 @@ namespace MSAddinTest.Core.Executor
     /// </summary>
     internal class StaticMethodExecutor : ExecutorBase
     {
+        public override int Priority { get; } = 50;
+
         protected MethodInfo MethodInfo { get; private set; }
         public StaticMethodExecutor(MethodInfo methodInfo) : base(null)
         {
@@ -45,14 +47,14 @@ namespace MSAddinTest.Core.Executor
             }
         }
 
-        public override void Execute(IMSTestArg plugin)
+        public override void Execute(string arg)
         {
             if (MethodInfo == null) return;
 
             // 调用静态方法
             try
             {
-                MethodInfo.Invoke(null, new object[] { plugin });
+                MethodInfo.Invoke(null, new object[] { arg });
 
             }
             catch (Exception ex)

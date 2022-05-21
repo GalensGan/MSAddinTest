@@ -29,13 +29,26 @@ namespace MSAddinTest.Core.Executor
             }
         }
 
-        public override void Execute(IMSTestArg pluginArg)
+        public override void Execute(string arg)
         {
             var instance = Activator.CreateInstance(Type, BindingFlags.Public | BindingFlags.NonPublic);
             if (instance is IMSTest_Class plugin)
             {
-                plugin.Execute(pluginArg);
+                plugin.Execute(arg);
             }
+        }
+
+        /// <summary>
+        /// 对于类执行器，与静态执行器不冲突
+        /// 只要不是类执行器，都返回false
+        /// </summary>
+        /// <param name="executor"></param>
+        /// <returns></returns>
+        public override bool IsSame(ExecutorBase executor)
+        {
+            if (!(executor is ClassExecutor))return false;
+
+            return base.IsSame(executor);
         }
     }
 }

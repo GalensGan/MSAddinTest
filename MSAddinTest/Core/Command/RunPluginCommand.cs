@@ -16,7 +16,6 @@ namespace MSAddinTest.Core.Command
     /// </summary>
     internal class RunPluginCommand : CommandBase
     {
-        private IMSTestArg _args;
         private string _executorName;
 
         /// <summary>
@@ -26,8 +25,7 @@ namespace MSAddinTest.Core.Command
         /// <param name="args"></param>
         public RunPluginCommand(string excutorName)
         {
-            _executorName = excutorName;
-            _args = new MSTestArg();
+            _executorName = excutorName;           
         }
 
         /// <summary>
@@ -44,7 +42,7 @@ namespace MSAddinTest.Core.Command
             {
                 foreach (var kv in PluginContainer)
                 {
-                    var result = kv.Value.Execute(_executorName, _args);
+                    var result = kv.Value.Execute(_executorName);
                     if (result.Data is int count) executorsCount += count;
                 }
             }

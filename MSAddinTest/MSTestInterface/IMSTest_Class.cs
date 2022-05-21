@@ -16,6 +16,6 @@ namespace MSAddinTest.MSTestInterface
         /// </summary>
         /// <param name="arg">用于初始化的参数</param>
         /// <returns>执行结果json串</returns>
-        void Execute(IMSTestArg arg);
+        void Execute(string arg);
     }
 }

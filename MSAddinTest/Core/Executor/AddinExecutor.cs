@@ -10,22 +10,21 @@ namespace MSAddinTest.Core.Executor
 {
     internal class AddinExecutor : StaticMethodExecutor
     {
+        public override int Priority { get; } = 100;
+
         public AddinExecutor(Type type, string methodName) : base(type, methodName)
         {
             Description = "Keyin";
         }
 
-        public override void Execute(IMSTestArg pluginArg)
+        public override void Execute(string arg)
         {
             if (MethodInfo == null) return;
 
             // 调用静态方法
             try
             {
-                string unparsedParams = string.Empty;
-                if (pluginArg is MSTestArg arg) unparsedParams = arg.UnparsedParams;
-
-                MethodInfo.Invoke(null, new object[] { unparsedParams });
+                MethodInfo.Invoke(null, new object[] { arg });
             }
             catch (Exception ex)
             {

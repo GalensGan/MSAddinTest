@@ -112,7 +112,7 @@ public static void TestElement(string unparsed)
 
 1. 类继承接口 IMSTest_StaticMethod
 2. 静态方法添加特性 MSTestAttribute
-3.  静态方法有且仅有一个 IMSTestArg 参数
+3.  静态方法有且仅有一个 string 参数
 
 示例如下：
 
@@ -126,7 +126,7 @@ public static void TestElement(string unparsed)
 public class TestStaticMethodExecutor : IMSTest_StaticMethod
 {
     [MSTest("static")]
-    public static object Execute(IMSTestArg arg)
+    public static object Execute(string arg)
     {
         MessageBox.Show("IStaticMethodPlugin 被调用了!");
         return true;
@@ -161,7 +161,7 @@ public class TestStaticMethodExecutor : IMSTest_StaticMethod
 internal class TestClassExecutor : IMSTest_Class
 {
     // 实现接口
-    public void Execute(IMSTestArg arg)
+    public void Execute(string arg)
     {
         MessageBox.Show("IClassPlugin 被调用了!");
     }
@@ -174,9 +174,11 @@ internal class TestClassExecutor : IMSTest_Class
 
 通过 `MSTest test name` 调用。
 
-**其它：**
+#### 混合使用
 
-当然，实例类中也可以同时添加静态方法入口，只需要按静态方法配置即可。
+可以将上述三种方式混合使用，可以在一个类上同时实现 `Addin`、`静态方法 `和 `实例方法` 三种测试方式。
+
+其中 Addin 和 静态方法 的调用名称一样时，保留 Addin 测试入口。
 
 ## 引用 DLL 更新
 
@@ -283,6 +285,7 @@ dllName.autoLoad=true,autoReload=true
 1. DLL 一旦加载后，就不能卸载，所以每次加载都会驻留在内存中
 2. 通过 `AppDomain.CurrentDomain.GetAssemblies()` 获取到的程序集是按加载顺序排列的
     如果在程序中涉及到序列化和反序列化操作时，序列化时不要保存程序集的版本信息，反序列化时取最新的程序集来获取相应的 Type。
+3. Tool 工具内抛出的异常无法被 Catch 到，如果不处理，会触发 MS 异常捕获，超过两次后会闪退
 
 ## UI
 

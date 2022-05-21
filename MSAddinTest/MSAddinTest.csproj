@@ -113,7 +113,6 @@
     <Compile Include="Index\KeyinFuncs.cs" />
     <Compile Include="Index\MSAddin.cs" />
     <Compile Include="MSTestInterface\MSTest_Addin.cs" />
-    <Compile Include="MSTestInterface\MSTestArg.cs" />
     <Compile Include="Utils\Ex_Json.cs" />
     <Compile Include="Utils\FileHelper.cs" />
   </ItemGroup>
@@ -121,7 +120,6 @@
     <Compile Include="MSTestInterface\IMSTest_Class.cs" />
     <Compile Include="MSTestInterface\IMSTest.cs" />
     <Compile Include="MSTestInterface\IMSTest_StaticMethod.cs" />
-    <Compile Include="MSTestInterface\IMSTestArg.cs" />
     <Compile Include="MSTestInterface\MSTestAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -21,7 +21,7 @@ namespace TestAddinPlugin
     public class TestStaticMethodExecutor : IMSTest_StaticMethod
     {
         [MSTest("static")]
-        public static object Execute(IMSTestArg arg)
+        public static object Execute(string arg)
         {
             MessageBox.Show("IStaticMethodPlugin 被调用了4!");
             return true;
@@ -29,7 +29,7 @@ namespace TestAddinPlugin
 
 
         [MSTest("element")]
-        public static object NewElement(IMSTestArg arg)
+        public static object NewElement(string arg)
         {
             // 绘制一个元素
             CurvePrimitive line = CurvePrimitive.CreateLineString(new List<DPoint3d>()
@@ -49,7 +49,7 @@ namespace TestAddinPlugin
         }
 
         [MSTest("exception")]
-        public static object TestReference(IMSTestArg arg)
+        public static object TestReference(string arg)
         {
             TestClass.NullException();
             return false;

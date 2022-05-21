@@ -19,11 +19,11 @@ namespace MSAddinTest.Utils
         {
             if (!File.Exists(filePath)) return "";
 
-            var hash = SHA256.Create();
+            var hash = SHA512.Create();
             var stream = new FileStream(filePath, FileMode.Open);
             byte[] bytes = hash.ComputeHash(stream);
             stream.Close();
-            return BitConverter.ToString(bytes).Replace("-", "");
+            return BitConverter.ToString(bytes);
         }
     }
 }

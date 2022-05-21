@@ -4,6 +4,7 @@ using MSAddinTest.MSTestInterface;
 using MSAddinTest.Utils;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -46,23 +47,34 @@ namespace MSAddinTest.Core.Loader
         private List<ExecutorBase> _executors = new List<ExecutorBase>();
 
         private string _lastFileHash = "";
+        private Assembly _currentAssembly;
         public FuncResult LoadAssembly()
         {
             try
             {
+                // 判断文件是否存在
+                if (!File.Exists(Setup.DllFullPath))
+                {
+                    return new FuncResult(false, "文件不存在");
+                }
+
                 // 验证文件 hash 值
-                var newFileHash = FileHelper.GetFileHash(Setup.DllFullPath);
-                if (_lastFileHash == newFileHash)
-                    return new FuncResult(false, "文件未改变");
-                else
-                    _lastFileHash = newFileHash;
+                //var newFileHash = FileHelper.GetFileHash(Setup.DllFullPath);
+                //if (_lastFileHash == newFileHash)
+                //    return new FuncResult(false, "文件未改变");
+                //else
+                //    _lastFileHash = newFileHash;
+
+                // 执行卸载逻辑
+                _msAddins.ForEach(x => x.Unloaded());
+                _msAddins.Clear();
 
                 // 读取文件然后加载
                 byte[] bytes = File.ReadAllBytes(Setup.DllFullPath);
-                var assembly = Assembly.Load(bytes);
+                _currentAssembly = Assembly.Load(bytes);
 
-                var results = BuilderExecutors(assembly);
-                _executors = results.ToList();
+                _executors.Clear();
+                BuilderExecutors(_currentAssembly);
 
                 return new FuncResult(true);
             }
@@ -72,8 +84,6 @@ namespace MSAddinTest.Core.Loader
             }
         }
 
-
-
         /// <summary>
         /// 生成执行器
         /// </summary>
@@ -82,16 +92,29 @@ namespace MSAddinTest.Core.Loader
         {
             var results = new List<ExecutorBase>();
 
-            // 获取类执行器
-            results.AddRange(GenerateClassExecutor(assembly));
+            AddExecutors(GenerateClassExecutor(assembly));
 
             // 静态方法执行器
-            results.AddRange(GenerateStaticMethodExecutor(assembly));
+            AddExecutors(GenerateStaticMethodExecutor(assembly));
 
             // 添加 addin 执行器
-            results.AddRange(GenerateAddinExecutor(assembly));
+            AddExecutors(GenerateAddinExecutor(assembly));
 
             return results;
+        }
+
+        private void AddExecutors(IEnumerable<ExecutorBase> executors)
+        {
+            foreach (var executor in executors)
+            {
+                var executorTemp = _executors.Find(x => x.IsSame(executor));
+                // 如果没找到或者优先级比原来高，则添加
+                if (executorTemp == null || executorTemp.Priority < executor.Priority)
+                {
+                    _executors.Remove(executorTemp);
+                    _executors.Add(executor);
+                }
+            }
         }
 
         // 获取类执行器
@@ -137,9 +160,9 @@ namespace MSAddinTest.Core.Loader
                     {
                         // 获取参数
                         var paraInfos = methodInfo.GetParameters();
-                        if (paraInfos.Length != 1 || !typeof(IMSTestArg).IsAssignableFrom(paraInfos[0].ParameterType))
+                        if (paraInfos.Length != 1 || !typeof(string).IsAssignableFrom(paraInfos[0].ParameterType))
                         {
-                            MessageCenter.Instance.ShowDebugMessage($"静态方法 {methodInfo.Name} 的参数个数必须有且只有一个 IMSTestArg 参数", "", false);
+                            MessageCenter.Instance.ShowDebugMessage($"静态方法 {methodInfo.Name} 的参数个数必须有且只有一个 string 参数", "", false);
                             continue;
                         };
 
@@ -153,6 +176,7 @@ namespace MSAddinTest.Core.Loader
             return results;
         }
 
+        private List<MSTest_Addin> _msAddins = new List<MSTest_Addin>();
         // 读取addin执行器
         private IEnumerable<ExecutorBase> GenerateAddinExecutor(Assembly assembly)
         {
@@ -166,9 +190,14 @@ namespace MSAddinTest.Core.Loader
                 // 找到后立即进行初始化
                 try
                 {
-                    var addin = Activator.CreateInstance(pluginType, IntPtr.Zero) as MSTest_Addin;
+                    var addin = Activator.CreateInstance(pluginType,
+                       BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
+                       null,
+                       new object[] { IntPtr.Zero }, CultureInfo.CurrentCulture) as MSTest_Addin;
+
                     // 进行初始化
                     addin.Init(Index.MSAddin.Instance);
+                    _msAddins.Add(addin);
                 }
                 catch (Exception ex)
                 {

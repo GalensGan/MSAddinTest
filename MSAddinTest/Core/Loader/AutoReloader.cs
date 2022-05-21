@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Bentley.MstnPlatformNET;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MSAddinTest.Core.Loader
 {
@@ -42,12 +44,17 @@ namespace MSAddinTest.Core.Loader
         }
 
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
-        {
+        {           
             // 判断是否是当前文件
             if (e.FullPath != _assemblyLoader.Setup.DllFullPath) return;
 
-            // 文件更改后，需要重新加载
-            _assemblyLoader.Reload();
+            // 事件是在另一个线程触发的，直接重载会报错
+            // 切换到主线程执行
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // 文件更改后，需要重新加载
+                _assemblyLoader.Reload();
+            });           
         }
     }
 }

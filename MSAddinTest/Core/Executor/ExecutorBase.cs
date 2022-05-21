@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MSAddinTest.Core.Executor
@@ -12,6 +13,12 @@ namespace MSAddinTest.Core.Executor
     /// </summary>
     public abstract class ExecutorBase : MarshalByRefObject
     {
+        /// <summary>
+        /// 优先级
+        /// 如果重名，则取优先级高的执行器
+        /// </summary>
+        public virtual int Priority { get; }
+
         public ExecutorBase(Type type)
         {
             Type = type;
@@ -34,7 +41,7 @@ namespace MSAddinTest.Core.Executor
         /// </summary>
         public string Description { get; set; }
 
-        public abstract void Execute(IMSTestArg plugin);
+        public abstract void Execute(string arg);
 
         /// <summary>
         /// 通过输入字符串匹配当前执行器
@@ -43,16 +50,31 @@ namespace MSAddinTest.Core.Executor
         /// <param name="name"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public bool IsMatch(string inputStr, out string name,out string args)
+        public bool IsMatch(string inputStr, out string name, out string args)
         {
             args = inputStr;
-            name = Names.Find(x=>inputStr.ToLower().StartsWith(x.ToLower()));
+            name = Names.Find(x => inputStr.ToLower().StartsWith(x.ToLower()));
             if (name == null) return false;
 
             // 生成参数
-            args = inputStr.Substring(inputStr.IndexOf(name) + 1);
+            args = inputStr.Substring(inputStr.ToLower().IndexOf(name.ToLower()) + name.Length).Trim();
 
             return true;
+        }
+
+        /// <summary>
+        /// 是否是相同命令
+        /// 只要有一个名称相同，就说明是同一个命令
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public virtual bool IsSame(ExecutorBase executor)
+        {
+            if (executor == null) return false;
+
+            if (executor.Type.FullName != Type.FullName) return false;
+
+            return Names.Union(executor.Names).Count() > 0;
         }
     }
 }
