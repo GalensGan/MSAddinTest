@@ -6,6 +6,10 @@
 
 你只需在 keyin 前加上 `MSTest test` 即可调用现有的 keyin 命令。
 
+the name of this plugin is `MSAddinTest`，it's an efficient plugin for addin developing on Miscrostation platform witch allow you to hot-reload addin plugin。
+
+it is so easy to use，when you want to invoke a keyin function，just put the string `MSTest test` before your  addin keyin，aha，just it~
+
 ## 功能特点
 
 1. 库热重载
