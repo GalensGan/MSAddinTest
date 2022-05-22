@@ -38,6 +38,9 @@ namespace MSAddinTest.Core.Executor
         {
             MethodInfo = methodInfo;
 
+            // 保存类型
+            Type = MethodInfo.DeclaringType;
+
             // 获取静态方法上面的特性
             var attribute = methodInfo.GetCustomAttributes(typeof(MSTestAttribute)).FirstOrDefault();
             if (attribute is MSTestAttribute attr)

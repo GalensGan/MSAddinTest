@@ -27,7 +27,7 @@ namespace MSAddinTest.Core.Executor
         /// <summary>
         /// 类型
         /// </summary>
-        protected Type Type { get; private set; }
+        protected Type Type { get; set; }
 
         /// <summary>
         /// 执行器名称
