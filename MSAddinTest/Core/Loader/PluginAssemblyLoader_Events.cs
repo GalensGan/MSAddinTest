@@ -44,7 +44,7 @@ namespace MSAddinTest.Core.Loader
         {
             // 获取对应版本的程序集
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            Assembly targetAssembly = assemblies.LastOrDefault(x => x.FullName.Contains(args.Name));        
+            Assembly targetAssembly = assemblies.LastOrDefault(x => x.FullName.Contains(args.Name));
 
             if (targetAssembly != null) return targetAssembly;
 
@@ -55,6 +55,13 @@ namespace MSAddinTest.Core.Loader
 
             byte[] bytes = File.ReadAllBytes(fileName);
             var assembly = Assembly.Load(bytes);
+
+            // 判断版本是否一致，不一致返回 null,交给其它订阅处理
+            if (assembly != null)
+            {
+                if (assembly.GetName().FullName == args.Name) return assembly;
+                return null;
+            }
 
             return assembly;
         }

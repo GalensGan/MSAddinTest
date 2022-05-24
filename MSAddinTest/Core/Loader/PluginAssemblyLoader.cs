@@ -111,7 +111,7 @@ namespace MSAddinTest.Core.Loader
                 // 如果没找到或者优先级比原来高，则添加
                 if (executorTemp == null || executorTemp.Priority < executor.Priority)
                 {
-                    _executors.Remove(executorTemp);
+                    if (executorTemp != null) _executors.Remove(executorTemp);
                     _executors.Add(executor);
                 }
             }

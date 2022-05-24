@@ -74,7 +74,7 @@ namespace MSAddinTest.Core.Executor
 
             if (executor.Type.FullName != Type.FullName) return false;
 
-            return Names.Union(executor.Names).Count() > 0;
+            return Names.Intersect(executor.Names).Count() > 0;
         }
     }
 }
