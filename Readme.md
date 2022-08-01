@@ -49,10 +49,7 @@ MSAddinTest 支持对以下三种方式的接口进行调用。
 
 #### Addin 库
 
-想要支持 Addin 库的调用，须满足以下条件：
-
-1. 自定义的 `Addin` 类继承抽象类 `MSTest_Addin`
-2. 实现抽象方法 `void Init(AddIn addIn)`
+想要支持 Addin 库的调用，须将自定义的 `Addin` 类继承抽象类 `MSTest_Addin`。
 
 示例如下：
 
@@ -68,27 +65,26 @@ internal class PluginAddin : MSTest_Addin
     public static AddIn Instance { get; private set; }
     public PluginAddin(IntPtr mdlDescriptor) : base(mdlDescriptor)
     {
-
+		// 在此处可以保存 this 用于窗体的加载
+        // this 是 MSTest_Addin 实例，可以转换成 Addin 是因为 MSTest_Addin 进行了隐式转换
+        Instance = this;
     }
 
-    // 重写初始化方法，获取 addin 参数
+    // 可以在此处重写初始化方法，一般不进行重写
     public override void Init(AddIn addin)
     {
-        Instance = addin;
-        Run(new string[] { });
     }
     
     // 在这个方法中释放资源
     public override void Unloaded() { }
 
+    // Run 方法自动调用
     protected override int Run(string[] commandLine)
     {
         return 0;
     }
 }
 ```
-
-> 如果需要使用 Addin，可以在 Init 方法中将 addin 保存
 
 **使用方法：**
 

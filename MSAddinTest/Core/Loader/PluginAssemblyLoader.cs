@@ -92,6 +92,7 @@ namespace MSAddinTest.Core.Loader
         {
             var results = new List<ExecutorBase>();
 
+            // 类执行器
             AddExecutors(GenerateClassExecutor(assembly));
 
             // 静态方法执行器
@@ -194,9 +195,10 @@ namespace MSAddinTest.Core.Loader
                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
                        null,
                        new object[] { IntPtr.Zero }, CultureInfo.CurrentCulture) as MSTest_Addin;
+                    // 完成后调用 run
+                    // 在此处调用初始化内容
+                    addin.Init(addin);
 
-                    // 进行初始化
-                    addin.Init(Index.MSAddin.Instance);
                     _msAddins.Add(addin);
                 }
                 catch (Exception ex)
