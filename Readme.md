@@ -76,7 +76,10 @@ internal class PluginAddin : MSTest_Addin
     }
     
     // 在这个方法中释放资源
-    public override void Unloaded() { }
+    public override void Unloaded() 
+    {
+        // 当插件重载时，可以在此处卸载上一次加载的事件
+    }
 
     // Run 方法自动调用
     protected override int Run(string[] commandLine)
