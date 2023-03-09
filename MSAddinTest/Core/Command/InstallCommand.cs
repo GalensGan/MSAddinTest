@@ -21,7 +21,8 @@ namespace MSAddinTest.Core.Command
 
             // 读取值并修改
             string configContent = File.ReadAllText(personalConfPath);
-            string autoloadSentence = "\r\n%level Organization\r\nMS_DGNAPPS > MSAddinTest";
+            //string autoloadSentence = "\r\n%level Organization\r\nMS_DGNAPPS > MSAddinTest";
+            string autoloadSentence = "\r\nMS_DGNAPPS > MSAddinTest";
             if (!configContent.Contains(autoloadSentence))
             {
                 // 添加语句使其自动加载

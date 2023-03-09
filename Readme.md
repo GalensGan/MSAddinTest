@@ -65,7 +65,7 @@ internal class PluginAddin : MSTest_Addin
     public static AddIn Instance { get; private set; }
     public PluginAddin(IntPtr mdlDescriptor) : base(mdlDescriptor)
     {
-		// 在此处可以保存 this 用于窗体的加载
+        // 在此处可以保存 this 用于窗体的加载
         // this 是 MSTest_Addin 实例，可以转换成 Addin 是因为 MSTest_Addin 进行了隐式转换
         Instance = this;
     }
