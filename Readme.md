@@ -2,7 +2,7 @@
 
 ## 简介
 
-本插件名为：MSAddinTest，是一款面向 Microstation 的 Addin 管理测试插件。通过它，你可以在不关闭 Microstation 的情况下，重新修改编译加载 DLL 库。
+本插件名为：MSAddinTest，使开发者在不关闭 Microstation 的情况下，重新修改编译加载 DLL 库，在开发 Microstation 的 Addin 时，可以快速进行热重载和调试。
 
 你只需在 keyin 前加上 `MSTest test` 即可调用现有的 keyin 命令。
 
