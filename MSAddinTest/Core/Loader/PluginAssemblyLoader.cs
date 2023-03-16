@@ -66,7 +66,7 @@ namespace MSAddinTest.Core.Loader
                 //    _lastFileHash = newFileHash;
 
                 // 执行卸载逻辑
-                _msAddins.ForEach(x => x.Unloaded());
+                _msAddins.ForEach(x => x.Unloaded(new AddIn.UnloadedEventArgs(AddIn.UnloadReasons.ExitByOtherApp)));
                 _msAddins.Clear();
 
                 // 读取文件然后加载

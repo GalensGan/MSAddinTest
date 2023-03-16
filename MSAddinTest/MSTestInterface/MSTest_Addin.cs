@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Bentley.MstnPlatformNET.AddIn;
 
 namespace MSAddinTest.MSTestInterface
 {
@@ -24,9 +25,10 @@ namespace MSAddinTest.MSTestInterface
         protected abstract int Run(string[] commandLine);
 
         /// <summary>
-        /// 卸载后手动清除向 Addin 中添加的一些事件
+        /// 卸载后手动清除向 Addin 中注册的一些事件
         /// </summary>
-        public virtual void Unloaded() { }
+        public virtual void Unloaded(UnloadedEventArgs eventArgs) { }
+
 
         /// <summary>
         /// 隐式转换成 addin
