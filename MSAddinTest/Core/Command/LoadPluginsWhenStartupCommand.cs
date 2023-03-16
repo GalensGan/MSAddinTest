@@ -1,4 +1,5 @@
-﻿using MSAddinTest.Core.Loader;
+﻿using Bentley.MstnPlatformNET;
+using MSAddinTest.Core.Loader;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,7 @@ namespace MSAddinTest.Core.Command
                 }
 
                 PluginContainer.Add(loader);
+                MessageCenter.Instance.ShowInfoMessage($"{loader.Setup.PluginName} 已自动加载!", "", false);
             }
 
             return new FuncResult(true);

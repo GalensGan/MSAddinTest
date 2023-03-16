@@ -22,7 +22,7 @@ namespace MSAddinTest.Core.Command
             if (PluginContainer.TryGetValue(_pluginName, out var container))
             {
                 container.Reload();
-                System.Windows.MessageBox.Show("重载成功！");
+                System.Windows.MessageBox.Show($"{_pluginName} 重载成功！");
             }
 
             return new FuncResult(true);

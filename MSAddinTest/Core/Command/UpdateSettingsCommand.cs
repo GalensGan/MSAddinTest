@@ -1,4 +1,5 @@
-﻿using MSAddinTest.Core.Settings;
+﻿using Bentley.MstnPlatformNET;
+using MSAddinTest.Core.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,7 @@ namespace MSAddinTest.Core.Command
             // 保存设置
             PluginSetting.Save();
 
+            MessageCenter.Instance.ShowInfoMessage("设置已保存!", "", false);
             return new FuncResult(true);
         }
     }

@@ -1,4 +1,5 @@
-﻿using MSAddinTest.Core.Settings;
+﻿using Bentley.MstnPlatformNET;
+using MSAddinTest.Core.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace MSAddinTest.Core.Command
             // 从存储中去掉记录
             PluginSetting.RemovePluginSetting(_pluginNameToUnload);
 
+            MessageCenter.Instance.ShowInfoMessage($"{_pluginNameToUnload} 已卸载!", "", false);
             return new FuncResult(true);
         }
     }
