@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bentley.MstnPlatformNET;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace MSAddinTest.Core.Command
             if (PluginContainer.TryGetValue(_pluginName, out var container))
             {
                 container.Reload();
-                System.Windows.MessageBox.Show($"{_pluginName} 重载成功！");
+                MessageCenter.Instance.ShowInfoMessage($"{_pluginName} 重载成功！", "", false);
             }
 
             return new FuncResult(true);

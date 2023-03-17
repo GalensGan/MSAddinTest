@@ -38,12 +38,12 @@ namespace MSAddinTest.Core.Command
             {
                 string pluginName = Path.GetFileNameWithoutExtension(dllPath);
 
-                if (PluginContainer.ContainsKey(pluginName))
+                if (PluginContainer.TryGetValue(pluginName,out var existLoader))
                 {
-                    return new FuncResult(false)
-                    {
-                        StatusCode = StatusCode.AlreadyLoaded
-                    };
+                    // 重载插件
+                    existLoader.Reload();
+                    MessageCenter.Instance.ShowInfoMessage($"找到相同插件 {existLoader.Setup.PluginName}，重载成功!", "", false);
+                    continue;
                 }
 
                 var setup = new LoaderSetup()
