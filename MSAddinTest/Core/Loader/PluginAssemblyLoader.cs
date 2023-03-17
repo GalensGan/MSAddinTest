@@ -41,12 +41,11 @@ namespace MSAddinTest.Core.Loader
         private readonly AutoReloader _autoReloader;
 
         // 所有根目录下的 dll 文件
-        private List<string> _allFileNames;
+        private readonly List<string> _allFileNames;
 
         // 从程序集中读取的执行器
-        private List<ExecutorBase> _executors = new List<ExecutorBase>();
+        private readonly List<ExecutorBase> _executors = new List<ExecutorBase>();
 
-        private string _lastFileHash = "";
         private Assembly _currentAssembly;
         public FuncResult LoadAssembly()
         {
@@ -66,7 +65,7 @@ namespace MSAddinTest.Core.Loader
                 //    _lastFileHash = newFileHash;
 
                 // 执行卸载逻辑
-                _msAddins.ForEach(x => x.Unloaded(new AddIn.UnloadedEventArgs(AddIn.UnloadReasons.ExitByOtherApp)));
+                _msAddins.ForEach(x => x.NotifyOnUnloaded(new AddIn.UnloadedEventArgs(AddIn.UnloadReasons.ExitByOtherApp)));
                 _msAddins.Clear();
 
                 // 读取文件然后加载
@@ -177,7 +176,7 @@ namespace MSAddinTest.Core.Loader
             return results;
         }
 
-        private List<MSTest_Addin> _msAddins = new List<MSTest_Addin>();
+        private readonly List<MSTest_Addin> _msAddins = new List<MSTest_Addin>();
         // 读取addin执行器
         private IEnumerable<ExecutorBase> GenerateAddinExecutor(Assembly assembly)
         {

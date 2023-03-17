@@ -27,8 +27,13 @@ namespace MSAddinTest.MSTestInterface
         /// <summary>
         /// 卸载后手动清除向 Addin 中注册的一些事件
         /// </summary>
-        public virtual void Unloaded(UnloadedEventArgs eventArgs) { }
+        protected virtual void OnUnloaded(UnloadedEventArgs eventArgs) { }
 
+        /// <summary>
+        /// 发送卸载完成通知
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        public void NotifyOnUnloaded(UnloadedEventArgs eventArgs) => OnUnloaded(eventArgs);
 
         /// <summary>
         /// 隐式转换成 addin

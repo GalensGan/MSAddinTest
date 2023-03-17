@@ -14,8 +14,8 @@ namespace MSAddinTest.Core.Loader
     /// </summary>
     internal class AutoReloader
     {
-        private FileSystemWatcher _watcher;
-        private PluginAssemblyLoader _assemblyLoader;
+        private readonly FileSystemWatcher _watcher;
+        private readonly PluginAssemblyLoader _assemblyLoader;
 
         public AutoReloader(PluginAssemblyLoader assemblyLoader)
         {

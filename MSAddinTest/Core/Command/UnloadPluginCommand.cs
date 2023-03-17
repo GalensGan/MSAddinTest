@@ -20,7 +20,7 @@ namespace MSAddinTest.Core.Command
         /// <summary>
         /// 待卸载的插件名称
         /// </summary>
-        private string _pluginNameToUnload { get; set; }
+        private readonly string _pluginNameToUnload;
 
         public override FuncResult Start()
         {

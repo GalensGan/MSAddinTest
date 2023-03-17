@@ -18,7 +18,7 @@ namespace MSAddinTest.Core.Settings
     public class PluginSetting
     {
         private JObject _jsonConfig;
-        private string _savePath;
+        private readonly string _savePath;
 
         public PluginSetting(object addin)
         {
