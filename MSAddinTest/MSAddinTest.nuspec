@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>MSAddinTest</id>
+    <version>1.0.2</version>
+    <title>MSAddinTest</title>
+    <authors>galens</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">Apache-2.0</license>
+    <!-- <icon>icon.png</icon> -->
+    <projectUrl>https://github.com/GalensGan/MSAddinTest/</projectUrl>
+    <description>a framework for microstation add or utils test</description>
+    <releaseNotes></releaseNotes>
+    <copyright>copyright 2023</copyright>
+    <tags>Microstation AddinTest Test</tags>
+  </metadata>
+</package>
