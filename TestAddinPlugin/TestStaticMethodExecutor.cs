@@ -20,7 +20,7 @@ namespace TestAddinPlugin
     /// </summary>
     public class TestStaticMethodExecutor : IMSTest_StaticMethod
     {
-        [MSTest("static")]
+        [MSTest("static",Description ="通过 mstest test static 来调用")]
         public static object Execute(string arg)
         {
             MessageBox.Show("IStaticMethodPlugin 被调用了4!");

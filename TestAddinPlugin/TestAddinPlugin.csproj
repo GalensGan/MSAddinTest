@@ -101,6 +101,10 @@
       <Project>{21d13145-f4b6-41d7-9ddd-0d9e4c128c09}</Project>
       <Name>MSAddinTest</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MSUtils\MSUtils.csproj">
+      <Project>{e687ef99-6f1e-4255-a31f-f235257a9391}</Project>
+      <Name>MSUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

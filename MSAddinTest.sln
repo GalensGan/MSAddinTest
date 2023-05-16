@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAddinTest", "MSAddinTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAddinPlugin", "TestAddinPlugin\TestAddinPlugin.csproj", "{013A0D0A-5C3F-4510-ACC0-CCB8C86CC4FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSUtils", "MSUtils\MSUtils.csproj", "{E687EF99-6F1E-4255-A31F-F235257A9391}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{013A0D0A-5C3F-4510-ACC0-CCB8C86CC4FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{013A0D0A-5C3F-4510-ACC0-CCB8C86CC4FC}.Release|x64.ActiveCfg = Release|x64
 		{013A0D0A-5C3F-4510-ACC0-CCB8C86CC4FC}.Release|x64.Build.0 = Release|x64
+		{E687EF99-6F1E-4255-A31F-F235257A9391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E687EF99-6F1E-4255-A31F-F235257A9391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E687EF99-6F1E-4255-A31F-F235257A9391}.Debug|x64.ActiveCfg = Debug|x64
+		{E687EF99-6F1E-4255-A31F-F235257A9391}.Debug|x64.Build.0 = Debug|x64
+		{E687EF99-6F1E-4255-A31F-F235257A9391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E687EF99-6F1E-4255-A31F-F235257A9391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E687EF99-6F1E-4255-A31F-F235257A9391}.Release|x64.ActiveCfg = Release|x64
+		{E687EF99-6F1E-4255-A31F-F235257A9391}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
