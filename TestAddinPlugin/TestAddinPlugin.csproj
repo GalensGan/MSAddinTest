@@ -66,11 +66,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\Bentley.GeometryNET.Structs.dll</HintPath>
     </Reference>
-    <Reference Include="MSAddinTest, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\sw_Bentley\OpenRoads\sw_Standards\mdlapps\MSAddinTest.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -102,9 +97,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MSUtils\MSUtils.csproj">
-      <Project>{E687EF99-6F1E-4255-A31F-F235257A9391}</Project>
-      <Name>MSUtils</Name>
+    <ProjectReference Include="..\MSAddinTest\MSAddinTest.csproj">
+      <Project>{21d13145-f4b6-41d7-9ddd-0d9e4c128c09}</Project>
+      <Name>MSAddinTest</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

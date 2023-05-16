@@ -2,27 +2,27 @@
 
 ## 简介
 
-本插件名为：MSAddinTest，使开发者在不关闭 Microstation 的情况下，可以实现代码热重载与快速调试。
+本插件名为：MSAddinTest，可以帮助开发者在不关闭 Microstation 的情况下，可以实现代码热重载与快速调试。
 
-你只需在 keyin 前加上 `MSTest test` 即可调用现有的 keyin 命令。
+对代码的入侵小，使用时只需在 keyin 前加上 `MSTest test` 即可调用现有的 keyin 命令。
 
-the name of this plugin is `MSAddinTest`，it's an efficient plugin for addin developing on Miscrostation platform witch allows you to hot-reload addin plugin。
+the name of this plugin is `MSAddinTest`，it's an efficient plugin for addin developing on Miscrostation platform which allows you to hot-reload addin plugin。
 
 it is so easy to use，when you want to invoke a keyin function，just put the string `MSTest test` before your  addin keyin，aha，just it~
 
 ## 功能特点
 
-1. 库热重载
+1. 支持热重载
 
    在进行 Microstation 调试过程中，仅可在方法内部进行修改，无法增加方法或者类等结构型操作，如果想要进行深度修改，只能关闭 Microstation，修改 Addin 库，编译，重新打开 Microstation，再开始调试。而启动 Microstation 相对费时，会浪费掉很多时间。
 
    本插件主要解决这个痛点，提供了对库的热重载功能，可以在不关闭 Microstation 的情况下，重新修改编译加载 DLL 库。
 
-2. 自动启动
+2. 支持自动启动
 
    支持一键配置在启动时加载。
 
-3. 自动加载 DLL
+3. 支持自动加载 DLL
 
    支持配置启动时自动加载测试 DLL，可以指定自动加载某些库。
 
@@ -30,9 +30,9 @@ it is so easy to use，when you want to invoke a keyin function，just put the s
 
    支持测试 DLL 的断点调试。
 
-5. 搭建测试简单，代码入侵小，与正常开发异
+5. 搭建测试简单，代码入侵小，与正常开发无异
 
-   测试 keyin 时，只需要 `MsTest test keyin` 即可执行测试，其它详见安装与使用。
+   测试 keyin 时，只需要 `MSTest test keyin` 即可执行测试，其它详见安装与使用。
 
 ## why not vs 原生热重载?
 
@@ -50,18 +50,20 @@ vs 热重载对于以下修改不支持：
 3. 加载  `MSAddinTest.dll`
 4. 输入 `MSTest install` 开启自动启动。可以输入 `MSTest uninstall` 关闭自动启动。
 
+> 支持基于 Microstation 的所有 Bentley 产品
+
 ## MSAddinTest 使用
 
 ### Debug 流程
 
 **调试：**
 
-1. 添加测试标记
+1. [标记调用入口](#标记调用入口)
 2. 编译代码
 3. 启动 Microstation
 
 1. 输入 keyin `MSTest load` 加载待测试 dll
-2. VS 中附加进程到 Micostation 开启调试
+2. VS 中附加进程到 Micostation 开启调试（快捷键：Ctrl+Alt+P）
 3. 输入 `MSTest test keyin` 调用待测试的 keyin 命令
 
 **重新修改：**
@@ -76,13 +78,13 @@ vs 热重载对于以下修改不支持：
 
    这一步可以通过设置实现自动重载：[mstest-set](#mstest-set)
 
-5. 在 vs 中将 Microstation 重新附加到进程
+5. 在 vs 中将 Microstation 重新附加到进程（快捷键：Shift+Alt+P）
 
 6. 输入 `MSTest test keyin` 进行调试
 
-### 添加测试标记
+### 标记调用入口
 
-对于不同的类，标记方式略有不同，详见下文：
+对于 Addin、静态方法、实例方法，标记调用入口的方式略有不同，下面分别进行介绍。
 
 #### Addin 库
 
@@ -132,13 +134,14 @@ internal class PluginAddin : MSTest_Addin
 
 **其它：**
 
-通过上述配置后，插件会自动读取命令表，从而根据命令表查找到 Keyin 对应的静态方法。一般 keyin 会有多个单词，如果觉得通过 MSTest test + keyin 的方式太长，可以在静态方法中添加 `MSTestAttribute` 特性来添加 keyin 别名。
+通过上述配置后，插件会自动读取命令表，从而根据命令表查找到 Keyin 对应的静态方法。
+
+一般 keyin 会有多个单词，如果觉得通过 MSTest test + keyin 的方式太长，可以在静态方法中添加 `MSTestAttribute` 特性来添加 keyin 别名。
 
 如下所示：
 
 ``` csharp
-// 可以通过 MSTest test element 来调用
-
+// 对于下列 keyin 对应的静态方法, 不仅可以通过 MSTest test keyin 来调用，还可以通过 MSTest test element 来调用
 [MSTest("element",Description ="这是keyin别名")]
 public static void TestElement(string unparsed)
 {
@@ -200,7 +203,8 @@ public class TestStaticMethodExecutor : IMSTest_StaticMethod
 [MSTest("class", Description = "测试 IClassPlugin 插件")]
 internal class TestClassExecutor : IMSTest_Class
 {
-    // 实现接口
+    // 实现接口 IMSTest_Class
+    // 该接口为实例初始化后的调用入口
     public void Execute(string arg)
     {
         MessageBox.Show("IClassPlugin 被调用了!");
@@ -214,11 +218,57 @@ internal class TestClassExecutor : IMSTest_Class
 
 通过 `MSTest test name` 调用。
 
-#### 混合使用
+#### 混合标记
 
 可以将上述三种方式混合使用，可以在一个类上同时实现 `Addin`、`静态方法 `和 `实例方法` 三种测试方式。
 
 其中 Addin 和 静态方法 的调用名称一样时，保留 Addin 测试入口。
+
+## 内置 Keyin 介绍
+
+### keyin 汇总
+
+| keyin 名称               | 作用                                                         |
+| ------------------------ | ------------------------------------------------------------ |
+| MSTest install           | 在用户配置中添加 MSAddinTest 自启动配置。安装后，每次打开软件都会自动加载 MSAddinTest。 |
+| MSTest uninstall         | 取消自启动。                                                 |
+| MSTest load              | 加载待测试的 Dll。只有加载了的  Dll，才能调用其中的方法。如果已经加载过，则等效于 reload。 |
+| MSTest unload + dllName  | 卸载已经加载的 dll                                           |
+| MSTest reload + dllName  | 重新加载目标 dll。当修改编译后，需要调用该 keyin 进行重新加载。 |
+| MSTest test + keyin/name | 调用方法。                                                   |
+| MSTest set               | 设置参数                                                     |
+
+### MSTest set
+
+该命令目前支持以下两个参数的设置：
+
+1. 目标 Dll 在启动时就加载
+
+   格式：`dllName.autoLoad=true`
+
+   多个配置用逗号分隔。
+
+2. 目标 Dll 的自动热重载
+
+   格式：`dllName.autoReload=true`
+
+   当修改编译后，MSTestAddin 会自动重载目标 dll，不需要手动调用 `MSTest reload`
+
+也可以同时设置：
+
+```csharp
+dllName.autoLoad=true,dllName.autoReload=true
+```
+
+如果后一个参数的 dll 名称与前一个是一样，则可以省略，如下：
+
+``` csharp
+dllName.autoLoad=true,autoReload=true
+```
+
+> 该配置的文件路径为：
+>
+> "_USTN_HOMEROOT" 变量位置下的`MSAddinTest\config.json`
 
 ## 引用 DLL 更新
 
@@ -248,49 +298,6 @@ internal class TestClassExecutor : IMSTest_Class
 >
 > 当被引用 DLL 用于正式环境时，须将其程序集集版本号改成特定版本号，防止其它引用该 DLL 的其它库出现错误。
 
-## 内置 Keyin 介绍
-
-### keyin 汇总
-
-| keyin 名称              | 作用                                                |
-| ----------------------- | --------------------------------------------------- |
-| MSTest install          | 在用户配置中添加 TestMSAddin 启动加载配置           |
-| MSTest uninstall        | 取消启动加载                                        |
-| MSTest test + keyin     | 调用方法                                            |
-| MSTest load             | 加载其它 Dll。只有加载了的  Dll，才能调用其中的方法 |
-| MSTest unload + dllName | 卸载已经加载的 dll                                  |
-| MSTest set              | 设置参数                                            |
-
-### MSTest set
-
-该命令目前支持设置以下两个参数：
-
-1. 目标 Dll 的启动时加载
-
-   格式：`dllName.autoLoad=true`
-
-   多个配置用逗号分隔。
-
-2. 目标 Dll 的自动热重载
-
-   格式：`dllName.autoReload=true`
-
-也可以同时设置：
-
-```csharp
-dllName.autoLoad=true,dllName.autoReload=true
-```
-
-如果后一个参数的 dll 名称与前一个是一样，则可以省略，如下：
-
-``` csharp
-dllName.autoLoad=true,autoReload=true
-```
-
-> 配置文件路径为：
->
-> "_USTN_HOMEROOT" 变量位置下的`MSAddinTest\config.json`
-
 ## 实现原理
 
 通过向默认域中加载不同版本的程序集来实现 DLL 版本的重载。为了可以重新编译已加载的 DLL，需要保证加载的 DLL 在被加载后不被锁定，本程序采用从内存的加载方式实现了这个需求。
@@ -314,7 +321,7 @@ dllName.autoLoad=true,autoReload=true
 
 ## UI
 
-本插件预留了 UI 接口，但短期内不会实现。欢迎同志们 PR。
+本插件预留了 UI 接口，但短期内不会实现。欢迎 PR。
 
 ## 开发环境
 

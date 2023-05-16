@@ -8,6 +8,10 @@ namespace MSUtils
 {
     public class TestClass
     {
+        /// <summary>
+        /// 测试异常
+        /// </summary>
+        /// <exception cref="NullReferenceException"></exception>
         public static void NullException()
         {
             throw new NullReferenceException("test exception in reference");
