@@ -76,7 +76,7 @@ vs 热重载对于以下修改不支持：
 
 4. 在 Microstation 中使用 `MsTest reload DllName` 来重新加载库文件
 
-   这一步可以通过设置实现自动重载：[mstest-set](#mstest-set)
+   这一步可以通过设置实现自动重载：[MSTest set](#mstest-set)
 
 5. 在 vs 中将 Microstation 重新附加到进程（快捷键：Shift+Alt+P）
 
@@ -257,13 +257,13 @@ internal class TestClassExecutor : IMSTest_Class
 也可以同时设置：
 
 ```csharp
-dllName.autoLoad=true,dllName.autoReload=true
+MSTest set dllName.autoLoad=true,dllName.autoReload=true
 ```
 
 如果后一个参数的 dll 名称与前一个是一样，则可以省略，如下：
 
 ``` csharp
-dllName.autoLoad=true,autoReload=true
+MSTest set dllName.autoLoad=true,autoReload=true
 ```
 
 > 该配置的文件路径为：
