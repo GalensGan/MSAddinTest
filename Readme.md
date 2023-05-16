@@ -76,7 +76,7 @@ vs 热重载对于以下修改不支持：
 
 4. 在 Microstation 中使用 `MsTest reload DllName` 来重新加载库文件
 
-   这一步可以通过设置实现自动重载：[MSTest set](#mstest-set)
+   这一步可以通过设置实现自动重载（[转到 MSTest set](#mstest-set)）来跳过。
 
 5. 在 vs 中将 Microstation 重新附加到进程（快捷键：Shift+Alt+P）
 
