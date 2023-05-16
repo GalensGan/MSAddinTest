@@ -2,7 +2,7 @@
 
 ## 简介
 
-本插件名为：MSAddinTest，使开发者在不关闭 Microstation 的情况下，重新修改编译加载 DLL 库，在开发 Microstation 的 Addin 时，可以快速进行热重载和调试。
+本插件名为：MSAddinTest，使开发者在不关闭 Microstation 的情况下，可以实现代码热重载与快速调试。
 
 你只需在 keyin 前加上 `MSTest test` 即可调用现有的 keyin 命令。
 
@@ -34,18 +34,55 @@ it is so easy to use，when you want to invoke a keyin function，just put the s
 
    测试 keyin 时，只需要 `MsTest test keyin` 即可执行测试，其它详见安装与使用。
 
-## 安装与使用
+## why not vs 原生热重载?
 
-### 插件安装
+vs 热重载对于以下修改不支持：
+
+- 添加方法、字段、构造函数等
+- 动态对象的增改
+
+而 MSAddinTest 没有上述限制。
+
+## MSAddinTest 安装
 
 1. 拷贝 `MSAddinTest.dll` 到 Microstaion 中的 `mdlapp` 目录里
 2. 启动 Microstation
 3. 加载  `MSAddinTest.dll`
 4. 输入 `MSTest install` 开启自动启动。可以输入 `MSTest uninstall` 关闭自动启动。
 
-### 测试标记
+## MSAddinTest 使用
 
-MSAddinTest 支持对以下三种方式的接口进行调用。
+### Debug 流程
+
+**调试：**
+
+1. 添加测试标记
+2. 编译代码
+3. 启动 Microstation
+
+1. 输入 keyin `MSTest load` 加载待测试 dll
+2. VS 中附加进程到 Micostation 开启调试
+3. 输入 `MSTest test keyin` 调用待测试的 keyin 命令
+
+**重新修改：**
+
+1. 关闭调试
+
+2. 编辑代码
+
+3. 重新编译
+
+4. 在 Microstation 中使用 `MsTest reload DllName` 来重新加载库文件
+
+   这一步可以通过设置实现自动重载：[mstest-set](#mstest-set)
+
+5. 在 vs 中将 Microstation 重新附加到进程
+
+6. 输入 `MSTest test keyin` 进行调试
+
+### 添加测试标记
+
+对于不同的类，标记方式略有不同，详见下文：
 
 #### Addin 库
 
@@ -253,21 +290,6 @@ dllName.autoLoad=true,autoReload=true
 > 配置文件路径为：
 >
 > "_USTN_HOMEROOT" 变量位置下的`MSAddinTest\config.json`
-
-## VisualStudio Debug 流程
-
-**调试：**
-
-1. 启动 Microstation
-2. 通过输入 keyin `MSTest load` 加载待测试 dll
-3. VS 中附加进程到 Micostation 开启调试
-
-**重新修改：**
-
-1. 关闭调试
-2. 编辑代码
-3. 重新编译，重新编译后即可在 Microstation 调用编辑后的代码
-4. 如果要进行 debug，重新附加到进程即可
 
 ## 实现原理
 
