@@ -22,7 +22,7 @@ namespace TestAddinPlugin.TestAddin
 
         }
 
-        protected override void Init(AddIn addin)
+        public override void Init(AddIn addin)
         {
             Instance = addin;
             Run(new string[] { });

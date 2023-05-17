@@ -56,15 +56,15 @@
   <ItemGroup>
     <Reference Include="Bentley.DgnPlatformNET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4bf6c96a266e58d4, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\Bentley.DgnPlatformNET.dll</HintPath>
+      <HintPath>$(Microstation)\Bentley.DgnPlatformNET.dll</HintPath>
     </Reference>
     <Reference Include="Bentley.GeometryNET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4bf6c96a266e58d4, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\Bentley.GeometryNET.dll</HintPath>
+      <HintPath>$(Microstation)\Bentley.GeometryNET.dll</HintPath>
     </Reference>
     <Reference Include="Bentley.GeometryNET.Structs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4bf6c96a266e58d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\Bentley.GeometryNET.Structs.dll</HintPath>
+      <HintPath>$(Microstation)\Bentley.GeometryNET.Structs.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,7 +76,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="ustation">
-      <HintPath>C:\Program Files\Bentley\OpenRoads Designer CONNECT Edition\OpenRoadsDesigner\ustation.dll</HintPath>
+      <HintPath>$(Microstation)\ustation.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

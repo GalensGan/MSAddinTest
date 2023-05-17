@@ -18,7 +18,7 @@ namespace TestAddinPlugin.TestAddin
 
         public static void TestAddin(string unparsed)
         {
-
+            MessageBox.Show("我是纯 keyin,且我没有被 MSTest 标记,我被调用了");
         }
     }
 }

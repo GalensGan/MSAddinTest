@@ -31,7 +31,7 @@ namespace MSAddinTest.Core.Executor
 
         public override void Execute(string arg)
         {
-            var instance = Activator.CreateInstance(Type, BindingFlags.Public | BindingFlags.NonPublic);
+            var instance = Activator.CreateInstance(Type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.CreateInstance | BindingFlags.NonPublic, null, new object[] { }, null);
             if (instance is IMSTest_Class plugin)
             {
                 plugin.Execute(arg);
@@ -46,7 +46,7 @@ namespace MSAddinTest.Core.Executor
         /// <returns></returns>
         public override bool IsSame(ExecutorBase executor)
         {
-            if (!(executor is ClassExecutor))return false;
+            if (!(executor is ClassExecutor)) return false;
 
             return base.IsSame(executor);
         }
