@@ -162,7 +162,7 @@ namespace MSAddinTest.Core.Loader
                         var paraInfos = methodInfo.GetParameters();
                         if (paraInfos.Length != 1 || !typeof(string).IsAssignableFrom(paraInfos[0].ParameterType))
                         {
-                            MessageCenter.Instance.ShowDebugMessage($"静态方法 {methodInfo.Name} 的参数个数必须有且只有一个 string 参数", "", false);
+                            MessageCenter.Instance.ShowErrorMessage($"静态方法 {methodInfo.Name} 的参数个数必须有且只有一个 string 参数", "", false);
                             continue;
                         };
 
@@ -202,7 +202,8 @@ namespace MSAddinTest.Core.Loader
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show("Addin 初始化失败：" + ex.Message + "\n" + ex.StackTrace);
+                    if (ex.InnerException != null) ex = ex.InnerException;
+                    MessageCenter.Instance.ShowErrorMessage("Addin 初始化失败：" + ex.Message, ex.StackTrace, true);
                 }
             }
 
