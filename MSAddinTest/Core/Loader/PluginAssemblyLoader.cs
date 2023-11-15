@@ -202,7 +202,7 @@ namespace MSAddinTest.Core.Loader
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show("Addin初始化失败：" + ex.Message);
+                    System.Windows.MessageBox.Show("Addin 初始化失败：" + ex.Message + "\n" + ex.StackTrace);
                 }
             }
 
