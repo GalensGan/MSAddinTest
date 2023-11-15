@@ -203,7 +203,8 @@ namespace MSAddinTest.Core.Loader
                 catch (Exception ex)
                 {
                     if (ex.InnerException != null) ex = ex.InnerException;
-                    MessageCenter.Instance.ShowErrorMessage("Addin 初始化失败：" + ex.Message, ex.StackTrace, true);
+                    System.Windows.MessageBox.Show("Addin 初始化失败：" + ex.Message);
+                    MessageCenter.Instance.ShowErrorMessage("Addin 初始化失败：" + ex.Message, ex.StackTrace, false);
                 }
             }
 
