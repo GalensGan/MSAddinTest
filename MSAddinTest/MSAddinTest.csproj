@@ -106,6 +106,7 @@
     <Compile Include="Core\Executor\StaticMethodExecutor.cs" />
     <Compile Include="Core\Loader\PluginAssemblyLoader_Events.cs" />
     <Compile Include="Core\Loader\PluginAssemblyLoader_Methods.cs" />
+    <Compile Include="Core\Message\MessageManager.cs" />
     <Compile Include="Core\PluginDomainContainer.cs" />
     <Compile Include="Core\PluginManager.cs" />
     <Compile Include="Core\Settings\PluginSetting.cs" />

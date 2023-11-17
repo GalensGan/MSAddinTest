@@ -22,14 +22,7 @@ namespace MSAddinTest.Core.Executor
             if (MethodInfo == null) return;
 
             // 调用静态方法
-            try
-            {
-                MethodInfo.Invoke(null, new object[] { arg });
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
+            MethodInfo.Invoke(null, new object[] { arg });
         }
     }
 }

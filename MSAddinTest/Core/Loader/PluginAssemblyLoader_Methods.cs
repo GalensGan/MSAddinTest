@@ -27,8 +27,7 @@ namespace MSAddinTest.Core.Loader
             foreach (var executor in executors)
             {
                 // 获取参数
-                executor.IsMatch(nameWithParams, out var executorName, out var strArg);                
-
+                executor.IsMatch(nameWithParams, out var executorName, out var strArg); 
                 executor.Execute(strArg.Trim());
             }
 

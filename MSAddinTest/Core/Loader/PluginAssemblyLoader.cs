@@ -201,10 +201,8 @@ namespace MSAddinTest.Core.Loader
                     _msAddins.Add(addin);
                 }
                 catch (Exception ex)
-                {
-                    if (ex.InnerException != null) ex = ex.InnerException;
-                    System.Windows.MessageBox.Show("Addin 初始化失败：" + ex.Message);
-                    MessageCenter.Instance.ShowErrorMessage("Addin 初始化失败：" + ex.Message, ex.StackTrace, false);
+                {                    
+                    Message.MessageManager.ShowException(ex, "Addin 初始化失败：");
                 }
             }
 

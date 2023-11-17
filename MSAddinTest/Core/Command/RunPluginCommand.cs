@@ -48,7 +48,7 @@ namespace MSAddinTest.Core.Command
             }
             catch (Exception ex)
             {
-                MessageCenter.Instance.ShowErrorMessage(ex.Message, ex.StackTrace, true);
+                Message.MessageManager.ShowException(ex);
             }
 
             if (executorsCount == 0)
