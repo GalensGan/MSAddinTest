@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 namespace MSAddinTest.MSTestInterface
 {
     /// <summary>
-    /// Plugin特性
+    /// Plugin 特性
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
     public class MSTestAttribute : Attribute
     {
+        /// <summary>
+        /// 内部会将 name.Trim() 作为 Name
+        /// </summary>
+        /// <param name="name"></param>
         public MSTestAttribute(string name)
         {
-            Name = name;
+            Name = name.Trim();
         }
 
         /// <summary>
