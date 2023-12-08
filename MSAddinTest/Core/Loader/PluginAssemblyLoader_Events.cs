@@ -25,7 +25,7 @@ namespace MSAddinTest.Core.Loader
 
         private void AppDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
         {
-            Message.MessageManager.ShowException(e.Exception);
+            // Message.MessageManager.ShowException(e.Exception);
         }
 
         #region 加载需要的程序集

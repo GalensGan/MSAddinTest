@@ -26,6 +26,10 @@ namespace MSAddinTest.Core.Executor
         {
             // 获取 MethodInfo
             var methodInfo = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+
+            // 如果为空，提示异常
+            if(MethodInfo==null) throw new NullReferenceException($"无法在 {type} 中找到静态方法 {methodName}");
+
             SetMthodInfo(methodInfo);
         }
 
