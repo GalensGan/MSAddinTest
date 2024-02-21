@@ -6,7 +6,7 @@
 
 对代码的入侵小，使用时只需在 keyin 前加上 `MSTest test` 即可调用现有的 keyin 命令。
 
-the name of this plugin is `MSAddinTest`，it's an efficient plugin for addin developing on Miscrostation platform which allows you to hot-reload addin plugin。
+The name of this plugin is `MSAddinTest`，it's an efficient plugin for addin developing on Miscrostation platform which allows you to hot-reload addin plugin。
 
 it is so easy to use，when you want to invoke a keyin function，just put the string `MSTest test` before your  addin keyin，aha，just it~
 
@@ -34,12 +34,13 @@ it is so easy to use，when you want to invoke a keyin function，just put the s
 
    测试 keyin 时，只需要 `MSTest test keyin` 即可执行测试，其它详见安装与使用。
 
-## why not vs 原生热重载?
+## 为什么不使用VS的原生热重载?
 
 vs 热重载对于以下修改不支持：
 
 - 添加方法、字段、构造函数等
 - 动态对象的增改
+- [More ...](https://learn.microsoft.com/zh-cn/visualstudio/debugger/supported-code-changes-csharp?view=vs-2022#unsupported-changes-to-code)
 
 而 MSAddinTest 没有上述限制。
 
@@ -99,19 +100,31 @@ vs 热重载对于以下修改不支持：
 /// 2. 在 Init 中获取传递的 addin 供当前库使用
 /// </summary>
 [AddIn(MdlTaskID = "TestAddinPlugin")]
-internal class PluginAddin : MSTest_Addin
+internal class PluginAddin
+// 通过 #if DEBUG 针对不同的编译场景编写不同的代码
+#if DEBUG
+  // debug 时，继承 MSTest_Addin，实现热重载
+  : MSTest_Addin
 {
+  	// 可以在此处重写初始化方法，一般不进行重写
+    // 该方法为 MSTest_Addin 特有
+    public override void Init(AddIn addin)
+    {
+        // 重写时，一定要调用父类中的方法
+      	base.Init(addin);
+    }
+#else
+  // 非 debug 模型式，直接继承 AddIn
+	: AddIn
+  { 
+#endif
+  
     public static AddIn Instance { get; private set; }
     public PluginAddin(IntPtr mdlDescriptor) : base(mdlDescriptor)
     {
         // 在此处可以保存 this 用于窗体的加载
         // this 是 MSTest_Addin 实例，可以转换成 Addin 是因为 MSTest_Addin 进行了隐式转换
         Instance = this;
-    }
-
-    // 可以在此处重写初始化方法，一般不进行重写
-    public override void Init(AddIn addin)
-    {
     }
     
     // 在这个方法中释放资源
