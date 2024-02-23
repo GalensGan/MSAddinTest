@@ -42,15 +42,16 @@ namespace MSAddinTest.Core.Loader
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
-            // 获取对应版本的程序集
+            // 获取最新版本的程序集
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            Assembly targetAssembly = assemblies.LastOrDefault(x => x.FullName.Contains(args.Name));
+            string assemblyName = args.Name.Split(',')[0].Trim();
+            Assembly targetAssembly = assemblies.LastOrDefault(x => x.FullName.Contains(assemblyName));
 
             if (targetAssembly != null) return targetAssembly;
 
-            // 找到文件，然后加载
-            string targetFileName = args.Name.Split(',')[0];
-            string fileName = _allFileNames.Find(x => x.Contains(targetFileName));
+            // 找到文件，然后加载            
+            string assemblyFileName = $"{assemblyName}.dll";
+            string fileName = _allFileNames.Find(x => x.EndsWith(assemblyFileName));
             if (fileName == null) return null;
 
             byte[] bytes = File.ReadAllBytes(fileName);

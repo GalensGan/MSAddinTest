@@ -50,5 +50,11 @@ namespace MSAddinTest.Core
         /// 数据
         /// </summary>
         public object Data { get; set; }
+
+        // 与 bool 类型的隐式转换
+        public static implicit operator bool(FuncResult result)
+        {
+            return result.Ok;
+        }
     }
 }

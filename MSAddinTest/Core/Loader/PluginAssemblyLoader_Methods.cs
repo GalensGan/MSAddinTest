@@ -1,4 +1,5 @@
-﻿using MSAddinTest.MSTestInterface;
+﻿using Bentley.MstnPlatformNET;
+using MSAddinTest.MSTestInterface;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -45,7 +46,12 @@ namespace MSAddinTest.Core.Loader
         /// </summary>
         public void Reload()
         {
-            LoadAssembly();
+            var reloadResult = LoadAssembly();
+            if (reloadResult)
+            {
+                // 提示成功               
+                MessageCenter.Instance.ShowInfoMessage($"{Setup.PluginName} 插件重载成功!", "", false);
+            }
         }
     }
 }
