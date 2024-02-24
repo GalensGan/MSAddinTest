@@ -142,6 +142,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Core\Settings\defaultSettings.json" />
+    <None Include="MSAddinTest.nuspec" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
