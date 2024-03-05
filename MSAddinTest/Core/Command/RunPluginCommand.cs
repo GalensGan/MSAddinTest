@@ -53,7 +53,7 @@ namespace MSAddinTest.Core.Command
 
             if (executorsCount == 0)
             {
-                MessageBox.Show($"未找到名为{_executorName}的执行器");
+                MessageBox.Show($"未找到名为：{_executorName} 的执行器");
             }
 
             return new FuncResult(executorsCount > 0);

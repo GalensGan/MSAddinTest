@@ -21,7 +21,7 @@ namespace MSAddinTest.Core.Loader
         {
             // 使用正则表达式将多个空格转换成一个空格
             nameWithParams = System.Text.RegularExpressions.Regex.Replace(nameWithParams, @"\s+", " ");
-            var nameTemp = nameWithParams.Trim().ToLower();
+            var nameTemp = nameWithParams.Trim();
             // 对名称进行匹配
             // 如果是 keyin ，通过匹配前缀是否为 keyin 来确定
             // 名称不区分大小写

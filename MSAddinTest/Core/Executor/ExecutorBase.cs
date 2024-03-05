@@ -46,7 +46,7 @@ namespace MSAddinTest.Core.Executor
         /// <summary>
         /// 通过输入字符串匹配当前执行器
         /// </summary>
-        /// <param name="inputStr"></param>
+        /// <param name="inputStr">用户输入的字符串</param>
         /// <param name="name"></param>
         /// <param name="args"></param>
         /// <returns></returns>
