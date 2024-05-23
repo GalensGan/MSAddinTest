@@ -126,13 +126,11 @@ namespace MSAddinTest.Core.Loader
             var iPluginType = typeof(IMSTest_Class);
             var pluginTypes = assembly.GetTypes().Where(x => !x.IsInterface && !x.IsAbstract && iPluginType.IsAssignableFrom(x));
             // 获取非 addin 插件
+            var commonPluginTypes = pluginTypes;
+            foreach (var pluginType in commonPluginTypes)
             {
-                var commonPluginTypes = pluginTypes;
-                foreach (var pluginType in commonPluginTypes)
-                {
-                    var classExecutor = new ClassExecutor(pluginType);
-                    results.Add(classExecutor);
-                }
+                var classExecutor = new ClassExecutor(pluginType);
+                results.Add(classExecutor);
             }
 
             return results;
@@ -201,7 +199,7 @@ namespace MSAddinTest.Core.Loader
                     _msAddins.Add(addin);
                 }
                 catch (Exception ex)
-                {                    
+                {
                     Message.MessageManager.ShowException(ex, "Addin 初始化失败：");
                 }
             }
