@@ -114,17 +114,17 @@
     <Compile Include="Core\Settings\PluginSetting.cs" />
     <Compile Include="Core\Settings\UpdateSettingArg.cs" />
     <Compile Include="Core\StatusCode.cs" />
-    <Compile Include="Index\KeyinFuncs.cs" />
-    <Compile Include="Index\MSAddin.cs" />
-    <Compile Include="MSTestInterface\MSTest_Addin.cs" />
+    <Compile Include="Startup\KeyinFuncs.cs" />
+    <Compile Include="Startup\MSAddin.cs" />
+    <Compile Include="Interfaces\TestAddin.cs" />
     <Compile Include="Utils\Ex_Json.cs" />
     <Compile Include="Utils\FileHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MSTestInterface\IMSTest_Class.cs" />
-    <Compile Include="MSTestInterface\IMSTest.cs" />
-    <Compile Include="MSTestInterface\IMSTest_StaticMethod.cs" />
-    <Compile Include="MSTestInterface\MSTestAttribute.cs" />
+    <Compile Include="Interfaces\ITestClass.cs" />
+    <Compile Include="Interfaces\IMSTest.cs" />
+    <Compile Include="Interfaces\ITestStaticMethod.cs" />
+    <Compile Include="Interfaces\MSTestAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -154,7 +154,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Index\Commands.xml">
+    <EmbeddedResource Include="Startup\Commands.xml">
       <SubType>Designer</SubType>
       <LogicalName>CommandTable.xml</LogicalName>
     </EmbeddedResource>

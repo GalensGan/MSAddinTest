@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSAddinTest.MSTestInterface
+namespace MSAddinTest.Interfaces
 {
     /// <summary>
     /// 类执行器的插件接口
     /// </summary>
-    public interface IMSTest_Class:IMSTest
+    public interface ITestClass:IMSTest
     {
         /// <summary>
         /// 执行插件方法

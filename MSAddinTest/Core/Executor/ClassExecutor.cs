@@ -1,10 +1,7 @@
-﻿using MSAddinTest.MSTestInterface;
+﻿using MSAddinTest.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MSAddinTest.Core.Executor
 {
@@ -32,7 +29,7 @@ namespace MSAddinTest.Core.Executor
         public override void Execute(string arg)
         {
             var instance = Activator.CreateInstance(Type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.CreateInstance | BindingFlags.NonPublic, null, new object[] { }, null);
-            if (instance is IMSTest_Class plugin)
+            if (instance is ITestClass plugin)
             {
                 plugin.Execute(arg);
             }

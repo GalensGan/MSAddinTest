@@ -1,7 +1,6 @@
 ﻿using Bentley.MstnPlatformNET;
 using MSAddinTest.Core.Executor;
-using MSAddinTest.MSTestInterface;
-using MSAddinTest.Utils;
+using MSAddinTest.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -123,7 +122,7 @@ namespace MSAddinTest.Core.Loader
             List<ExecutorBase> results = new List<ExecutorBase>();
 
             // 生成运行数据
-            var iPluginType = typeof(IMSTest_Class);
+            var iPluginType = typeof(ITestClass);
             var pluginTypes = assembly.GetTypes().Where(x => !x.IsInterface && !x.IsAbstract && iPluginType.IsAssignableFrom(x));
             // 获取非 addin 插件
             var commonPluginTypes = pluginTypes;
@@ -146,7 +145,7 @@ namespace MSAddinTest.Core.Loader
             List<ExecutorBase> results = new List<ExecutorBase>();
 
             // 生成运行数据
-            var iPluginType = typeof(IMSTest_StaticMethod);
+            var iPluginType = typeof(ITestStaticMethod);
             var pluginTypes = assembly.GetTypes().Where(x => !x.IsInterface && !x.IsAbstract && iPluginType.IsAssignableFrom(x));
             // 获取静态方法执行器
             {
@@ -174,12 +173,12 @@ namespace MSAddinTest.Core.Loader
             return results;
         }
 
-        private readonly List<MSTest_Addin> _msAddins = new List<MSTest_Addin>();
+        private readonly List<TestAddin> _msAddins = new List<TestAddin>();
         // 读取addin执行器
         private IEnumerable<ExecutorBase> GenerateAddinExecutor(Assembly assembly)
         {
             // 生成运行数据
-            var iPluginType = typeof(MSTest_Addin);
+            var iPluginType = typeof(TestAddin);
             var allTypes = assembly.GetTypes();
             var pluginTypes = allTypes.Where(x => x.IsSubclassOf(iPluginType));
 
@@ -191,7 +190,7 @@ namespace MSAddinTest.Core.Loader
                     var addin = Activator.CreateInstance(pluginType,
                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
                        null,
-                       new object[] { IntPtr.Zero }, CultureInfo.CurrentCulture) as MSTest_Addin;
+                       new object[] { IntPtr.Zero }, CultureInfo.CurrentCulture) as TestAddin;
                     // 完成后调用 run
                     // 在此处调用初始化内容
                     addin.Init(addin);

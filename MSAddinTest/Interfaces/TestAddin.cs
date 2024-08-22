@@ -6,14 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using static Bentley.MstnPlatformNET.AddIn;
 
-namespace MSAddinTest.MSTestInterface
+namespace MSAddinTest.Interfaces
 {
     /// <summary>
     /// Addin 插件
     /// </summary>
-    public abstract class MSTest_Addin : IMSTest
+    public abstract class TestAddin : IMSTest
     {
-        protected MSTest_Addin(IntPtr mdlDescriptor)
+        protected TestAddin(IntPtr mdlDescriptor)
         {           
         }
 
@@ -39,9 +39,9 @@ namespace MSAddinTest.MSTestInterface
         /// 隐式转换成 addin
         /// </summary>
         /// <param name="testAddin"></param>
-        public static implicit operator AddIn(MSTest_Addin testAddin)
+        public static implicit operator AddIn(TestAddin testAddin)
         {
-            return Index.MSAddin.Instance;
+            return Startup.MSAddin.Instance;
         }
     }
 }

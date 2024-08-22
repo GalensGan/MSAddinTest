@@ -1,16 +1,7 @@
-﻿using Bentley.DgnPlatformNET;
-using Bentley.MstnPlatformNET;
-using MSAddinTest.Core;
+﻿using MSAddinTest.Core;
 using MSAddinTest.Core.Command;
-using MSAddinTest.MSTestInterface;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MSAddinTest.Index
+namespace MSAddinTest.Startup
 {
     internal class KeyinFuncs
     {

@@ -24,7 +24,7 @@ namespace MSAddinTest.Core.Settings
         {
             _savePath = Path.Combine(ConfigurationManager.GetVariable("_USTN_HOMEROOT"), $@"MSAddinTest\config.json");
             // 监听Ord关闭事件，关闭之前要保存配置
-            Index.MSAddin.Instance.ExitDesignFileStateEvent += Instance_ExitDesignFileStateEvent;
+            Startup.MSAddin.Instance.ExitDesignFileStateEvent += Instance_ExitDesignFileStateEvent;
 
             // 从指定目录读取配置文件
             Read();

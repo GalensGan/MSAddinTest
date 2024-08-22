@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MSAddinTest.Index
+namespace MSAddinTest.Startup
 {
     /// <summary>
     /// Microstation Addin 入口
