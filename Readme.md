@@ -89,25 +89,25 @@ vs 热重载对于以下修改不支持：
 
 #### Addin 库
 
-想要支持 Addin 库的调用，须将自定义的 `Addin` 类继承抽象类 `MSTest_Addin`。
+想要支持 Addin 库的调用，须将自定义的 `Addin` 类继承抽象类 `TestAddin`。
 
 示例如下：
 
 ``` csharp
 /// <summary>
 /// 测试 addin 调试
-/// 1. 继承抽象类 MSTest_Addin
+/// 1. 继承抽象类 TestAddin
 /// 2. 在 Init 中获取传递的 addin 供当前库使用
 /// </summary>
 [AddIn(MdlTaskID = "TestAddinPlugin")]
 internal class PluginAddin
 // 通过 #if DEBUG 针对不同的编译场景编写不同的代码
 #if DEBUG
-  // debug 时，继承 MSTest_Addin，实现热重载
-  : MSTest_Addin
+  // debug 时，继承 TestAddin，实现热重载
+  : TestAddin
 {
   	// 可以在此处重写初始化方法，一般不进行重写
-    // 该方法为 MSTest_Addin 特有
+    // 该方法为 TestAddin 特有
     public override void Init(AddIn addin)
     {
         // 重写时，一定要调用父类中的方法
@@ -123,7 +123,7 @@ internal class PluginAddin
     public PluginAddin(IntPtr mdlDescriptor) : base(mdlDescriptor)
     {
         // 在此处可以保存 this 用于窗体的加载
-        // this 是 MSTest_Addin 实例，可以转换成 Addin 是因为 MSTest_Addin 进行了隐式转换
+        // this 是 TestAddin 实例，可以转换成 Addin 是因为 TestAddin 进行了隐式转换
         Instance = this;
     }
     
@@ -166,8 +166,8 @@ public static void TestElement(string unparsed)
 
 除了 keyin 对应的静态方法外，想要调用其它静态方法，须满足以下条件：
 
-1. 类继承接口 IMSTest_StaticMethod
-2. 静态方法添加特性 MSTestAttribute
+1. 类继承接口 `ITestStaticMethod`
+2. 静态方法添加特性 `MSTestAttribute`
 3.  静态方法有且仅有一个 string 参数
 
 示例如下：
@@ -175,11 +175,11 @@ public static void TestElement(string unparsed)
 ``` csharp
 /// <summary>
 /// 测试静态方法
-/// 1. 类继承接口 IMSTest_StaticMethod
+/// 1. 类继承接口 ITestStaticMethod
 /// 2. 静态方法添加特性 MSTest
 /// 3. 静态方法有且仅有一个IMSTestArg参数
 /// </summary>
-public class TestStaticMethodExecutor : IMSTest_StaticMethod
+public class TestStaticMethodExecutor : ITestStaticMethod
 {
     [MSTest("static")]
     public static object Execute(string arg)
@@ -202,21 +202,21 @@ public class TestStaticMethodExecutor : IMSTest_StaticMethod
 
 本插件也支持对实例的调试，须满足以下条件：
 
-1. 继承接口 IMSTest_Class
-2. 类上添加特性 MSTestAttribute
+1. 继承接口 `ITestClass`
+2. 类上添加特性 `MSTestAttribute`
 
 示例如下：
 
 ``` csharp
 /// <summary>
 /// 测试类执行器
-/// 1. 继承接口 IMSTest_Class
+/// 1. 继承接口 ITestClass
 /// 2. 类添加特性 MSTest
 /// </summary>
 [MSTest("class", Description = "测试 IClassPlugin 插件")]
-internal class TestClassExecutor : IMSTest_Class
+internal class TestClassExecutor : ITestClass
 {
-    // 实现接口 IMSTest_Class
+    // 实现接口 ITestClass
     // 该接口为实例初始化后的调用入口
     public void Execute(string arg)
     {
